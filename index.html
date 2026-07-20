@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crea la tua linea del tempo</title>
+  <style>
+:root{--bg:#f3f5f7;--surface:#fff;--surface-2:#f8fafb;--text:#17202a;--muted:#65717e;--line:#dce2e7;--primary:#215c63;--primary-dark:#17464c;--primary-soft:#e7f1f2;--danger:#a43b3b;--danger-soft:#fff0f0;--shadow:0 10px 28px rgba(22,34,45,.08);--radius:18px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.45}button,input,textarea,select{font:inherit}button{cursor:pointer}.visually-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:24px;padding:14px clamp(18px,3vw,44px);background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none;min-width:max-content}.brand-mark{color:var(--primary);font-weight:800;letter-spacing:-2px}.brand small{display:block;color:var(--muted);font-size:.68rem;letter-spacing:.12em}.brand strong{font-size:1.12rem}.save-state{margin-left:auto;color:var(--muted);font-size:.86rem}.top-actions{display:flex;gap:9px;flex-wrap:wrap}
+.start-choice{margin:20px 0 24px;padding:28px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);text-align:center}.start-choice h2{margin:6px 0 8px;font-size:clamp(1.45rem,2.2vw,2rem)}.start-choice>p{margin:0 auto 20px;max-width:760px;color:var(--muted)}.start-choice-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:900px;margin:auto}.choice-button{min-height:92px;padding:18px;font-size:1.05rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}.choice-button small{font-weight:500;font-size:.82rem;opacity:.86}.creation-flow[hidden]{display:none!important}.button{border:1px solid transparent;border-radius:11px;padding:10px 15px;font-weight:700;transition:.18s ease}.button:hover{transform:translateY(-1px)}.button.primary{background:var(--primary);color:#fff}.button.primary:hover{background:var(--primary-dark)}.button.secondary{background:#fff;border-color:var(--line);color:var(--text)}.button.secondary:hover{border-color:#aebac2}.button.compact{padding:8px 11px;font-size:.88rem}.button.wide{width:100%;padding:13px}.text-button{border:0;background:transparent;color:var(--primary);padding:5px 0;font-weight:700;text-decoration:underline;text-underline-offset:3px}.text-button.danger{color:var(--danger)}.icon-button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 10px;font-size:.82rem;font-weight:700}.icon-button.danger{color:var(--danger);border-color:#eccaca}.optional{font-size:.78rem;font-weight:500;color:var(--muted)}
+main{max-width:1800px;margin:auto;padding:26px clamp(16px,3vw,44px) 60px}.project-intro{display:grid;grid-template-columns:minmax(260px,.75fr) minmax(420px,1.25fr);gap:28px;align-items:end;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}.intro-copy h1{margin:8px 0 8px;font-size:clamp(1.7rem,2.6vw,2.5rem);line-height:1.08}.intro-copy p{margin:0;color:var(--muted);max-width:620px}.step-pill{display:inline-block;color:var(--primary);font-size:.72rem;font-weight:800;letter-spacing:.12em}.project-fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field label{display:block;font-size:.9rem;font-weight:750;margin-bottom:7px}.field input,.field textarea,.field select{width:100%;border:1px solid #cbd4da;border-radius:11px;background:#fff;color:var(--text);padding:12px 13px;outline:none}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}.field textarea{resize:vertical}.field-help,.field-error{margin:6px 0 0;font-size:.78rem}.field-help{color:var(--muted)}.field-error{color:var(--danger)}
+.instructions-panel{margin-bottom:18px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}.instructions-head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 24px;background:var(--primary-soft)}.instructions-head h1{margin:3px 0 4px;font-size:1.35rem}.instructions-head p{margin:0;color:#38575b}.instructions-actions{display:flex;gap:10px;flex-wrap:wrap}.instructions-body{padding:22px 24px}.instructions-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.instruction-card{border:1px solid var(--line);border-radius:13px;padding:15px;background:#fff}.instruction-card strong{display:block;margin-bottom:5px}.instruction-number{display:inline-grid;place-items:center;width:27px;height:27px;border-radius:50%;background:var(--primary);color:#fff;font-size:.78rem;margin-right:7px}.github-box{margin-top:16px;padding:16px;border-left:5px solid var(--primary);background:#f5fafb;border-radius:10px}.github-box h3{margin:0 0 7px}.github-box p{margin:5px 0}.github-box code{background:#e8eff1;padding:2px 5px;border-radius:5px}.github-tutorial-row{margin-top:14px;display:flex;justify-content:flex-start;flex-wrap:wrap}.github-tutorial-row .button{max-width:100%;text-align:center}.edit-existing-box{margin-top:16px;border:1px solid var(--line);border-radius:12px;overflow:hidden}.edit-existing-toggle{width:100%;justify-content:space-between;text-align:left;border:0;border-radius:0;background:#eef6f7;color:var(--text);padding:14px 16px}.edit-existing-content{padding:16px;background:#fff}.edit-existing-content ol{margin:8px 0 0;padding-left:22px}.edit-existing-content code{background:#e8eff1;padding:2px 5px;border-radius:5px}.guide-bar{display:flex;align-items:center;flex-wrap:wrap;gap:12px 22px;margin:18px 0;padding:14px 18px;background:var(--primary-soft);border:1px solid #c8dedf;border-radius:14px;color:#29474b;font-size:.9rem}.guide-bar span{display:flex;align-items:center;gap:7px}.guide-bar b{display:grid;place-items:center;width:23px;height:23px;border-radius:50%;background:var(--primary);color:#fff;font-size:.75rem}
+.studio{display:grid;grid-template-columns:minmax(240px,300px) minmax(400px,1fr) minmax(420px,560px);gap:18px;align-items:start}.cards-panel,.live-panel,.edit-panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.cards-panel{position:sticky;top:88px;padding:20px;max-height:calc(100vh - 112px);overflow:auto}.live-panel{position:sticky;top:88px;padding:20px;min-height:650px}.edit-panel{padding:20px}.panel-heading{display:flex;justify-content:space-between;gap:16px;margin-bottom:16px}.panel-heading.compact{margin-bottom:14px}.panel-heading h2{margin:5px 0 3px;font-size:1.22rem}.panel-heading p{margin:0;color:var(--muted);font-size:.88rem}.editor-heading{align-items:flex-start}.card-tools{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.empty-state{display:flex;flex-direction:column;align-items:center;text-align:center;gap:5px;padding:24px 15px;border:1px dashed #cbd4da;border-radius:14px;color:var(--muted);background:var(--surface-2)}.empty-state strong{color:var(--text)}.empty-state.large{padding:60px 20px}.empty-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--primary-soft);color:var(--primary);font-size:1.35rem;font-weight:800}.event-list{display:flex;flex-direction:column;gap:9px;margin-top:13px}.event-list-item{display:grid;grid-template-columns:20px 54px 1fr;gap:9px;align-items:center;padding:9px;border:1px solid var(--line);border-radius:12px;background:#fff;transition:.15s}.event-list-item[aria-current="true"]{border:2px solid var(--primary);background:var(--primary-soft)}.event-list-item.dragging{opacity:.5}.event-list-item.drag-over{border-top:4px solid var(--primary)}.drag-handle{color:#89949e;cursor:grab}.event-thumb{width:54px;height:54px;object-fit:cover;border-radius:9px;background:#edf1f3}.placeholder-thumb{display:grid;place-items:center;font-size:.65rem;color:var(--muted)}.event-select{min-width:0;text-align:left;border:0;background:transparent;padding:0}.event-list-title,.event-list-meta{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.event-list-title{font-weight:800}.event-list-meta{font-size:.74rem;color:var(--muted);margin-top:2px}.status-badge{grid-column:2/3;justify-self:start;font-size:.68rem;font-weight:800;padding:3px 7px;border-radius:999px}.status-complete{color:#24613d;background:#e9f6ee}.status-incomplete{color:#8b5910;background:#fff4df}.list-delete{grid-column:3/4;justify-self:end;font-size:.72rem}.drag-help{font-size:.78rem;color:var(--muted);margin:13px 2px}.project-file-actions{display:flex;flex-direction:column;align-items:flex-start;gap:3px;border-top:1px solid var(--line);padding-top:13px;margin-top:14px;font-size:.82rem}
+.live-stage{min-height:520px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(180deg,#fafcfd,#f2f5f6);overflow:auto;padding:24px 14px}.live-tip{font-size:.78rem;color:var(--muted);text-align:center;margin-top:11px}.timeline-stage .empty-editor{display:grid;place-items:center;min-height:180px;color:var(--muted);text-align:center}.timeline{position:relative;display:flex;align-items:flex-start;gap:28px;min-width:max-content;padding:70px 35px 45px}.timeline-line{position:absolute;left:25px;right:25px;top:144px;height:4px;background:#b7c6c9}.timeline-card-wrap{position:relative;width:210px;text-align:center;transition:.25s}.timeline-date{font-weight:850;color:var(--primary);font-size:1.05rem}.timeline-stem{height:34px;width:2px;background:#93a8ac;margin:7px auto 0}.timeline-star{position:relative;z-index:2;color:var(--primary);font-size:1.15rem;margin-top:-4px}.timeline-label{min-height:58px;padding:9px 5px}.timeline-label strong,.timeline-label span{display:block}.timeline-label span{font-size:.8rem;color:var(--muted)}.timeline-card{width:190px;height:230px;margin:auto;perspective:1000px;cursor:pointer;outline:none;transition:.25s}.timeline-card-wrap.is-active{z-index:12}.timeline-card-wrap.is-active .timeline-card{transform:scale(1.42);margin-top:34px;margin-bottom:58px}.timeline-card-inner{position:relative;width:100%;height:100%;transition:transform .65s;transform-style:preserve-3d}.timeline-card.is-flipped .timeline-card-inner{transform:rotateY(180deg)}.timeline-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;overflow:hidden;background:#fff;border:1px solid #cdd7db;box-shadow:0 10px 24px rgba(24,39,50,.14)}.timeline-front img{width:100%;height:100%;object-fit:cover}.timeline-back{transform:rotateY(180deg);padding:21px 16px 15px;overflow:auto;text-align:left}.timeline-back p{margin:0;font-size:.82rem}.timeline-close{position:absolute;right:6px;top:5px;border:0;background:#fff;border-radius:50%;width:28px;height:28px;font-size:1.2rem}.timeline-links{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin-top:9px}.timeline-link{font-size:.7rem;text-decoration:none;background:var(--primary);color:#fff;padding:5px 8px;border-radius:7px}.links-hidden .timeline-links{visibility:hidden}.audio-state{font-size:.72rem;color:var(--muted);margin-top:10px}
+.form-section{border:1px solid var(--line);border-radius:15px;padding:17px;margin-bottom:14px;background:#fff}.form-section.essential{border-top:4px solid var(--primary)}.section-heading{display:flex;gap:11px;align-items:flex-start;margin-bottom:15px}.section-heading h3{margin:1px 0 2px;font-size:1.05rem}.section-heading p{margin:0;color:var(--muted);font-size:.82rem}.section-icon{flex:0 0 auto;display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--primary-soft);color:var(--primary);font-weight:850}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field.full{grid-column:1/-1}.drop-zone{display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;border:2px dashed #b8c5ca;background:var(--surface-2);border-radius:14px;padding:22px;cursor:pointer;transition:.18s}.drop-zone:hover{border-color:var(--primary);background:var(--primary-soft)}.drop-zone span:last-child{font-size:.78rem;color:var(--muted)}.drop-icon{font-size:1.7rem;color:var(--primary)}.media-preview{display:flex;align-items:center;gap:12px;min-height:72px;margin-top:10px;padding:9px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--muted);font-size:.82rem}.media-preview img{width:88px;height:70px;object-fit:cover;border-radius:8px}.media-meta{color:var(--text);text-align:left}.media-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:8px 0 14px}.audio-player{width:100%;margin-top:7px}.optional-section{padding:0;overflow:hidden}.optional-section summary{display:flex;align-items:center;gap:11px;cursor:pointer;padding:16px;list-style:none}.optional-section summary::-webkit-details-marker{display:none}.optional-section summary small{display:block;color:var(--muted);font-weight:400;margin-top:2px}.details-content{border-top:1px solid var(--line);padding:16px}.links-editor{display:flex;flex-direction:column;gap:10px}.link-row{display:grid;grid-template-columns:.7fr 1fr 1.4fr auto;gap:9px;align-items:end;padding:10px;background:var(--surface-2);border-radius:11px}.editor-bottom{border-top:1px solid var(--line);padding-top:16px}.move-actions,.main-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.move-actions{margin-bottom:14px;font-size:.82rem;color:var(--muted)}.main-actions{justify-content:flex-end}
+.finish-panel{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;margin-top:20px;padding:24px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.finish-panel h2{margin:6px 0 4px}.finish-panel p{margin:0;color:var(--muted)}.finish-actions{display:flex;gap:9px;flex-wrap:wrap;justify-content:flex-end}.finish-actions ol{width:100%;margin:10px 0 0}.validation-summary{grid-column:1/-1}.validation-summary:empty{display:none}.toast{position:fixed;right:22px;bottom:22px;z-index:100;background:#17202a;color:#fff;padding:12px 16px;border-radius:10px;box-shadow:var(--shadow);opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:none}.modal{display:none;position:fixed;inset:0;z-index:80;background:#fff}.modal.open{display:block}.modal-toolbar{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid var(--line)}.modal-content{height:calc(100vh - 64px);overflow:auto;padding:20px}.modal-content .timeline-stage{min-height:100%}
+@media(max-width:1350px){.studio{grid-template-columns:270px 1fr}.edit-panel{grid-column:2}.live-panel{position:relative;top:auto}.cards-panel{grid-row:1/3}}
+@media(max-width:900px){.start-choice-actions{grid-template-columns:1fr}.instructions-grid{grid-template-columns:1fr}.instructions-head{align-items:flex-start;flex-direction:column}.topbar{position:relative;flex-wrap:wrap}.save-state{margin-left:0}.top-actions{width:100%}.project-intro{grid-template-columns:1fr}.project-fields{grid-template-columns:1fr}.studio{grid-template-columns:1fr}.cards-panel,.live-panel{position:relative;top:auto;max-height:none}.edit-panel{grid-column:auto}.guide-bar{align-items:flex-start;flex-direction:column}.finish-panel{grid-template-columns:1fr}.finish-actions{justify-content:flex-start}}
+@media(max-width:560px){main{padding:14px 10px 40px}.topbar{padding:12px}.top-actions .button{flex:1;font-size:.78rem;padding:9px}.project-intro,.cards-panel,.live-panel,.edit-panel,.finish-panel{padding:16px;border-radius:14px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.link-row{grid-template-columns:1fr}.main-actions .button{width:100%}.timeline{padding-left:18px;padding-right:18px}.live-stage{padding:12px 4px}}
+
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#workspace" aria-label="Crea la tua linea del tempo">
+    <span class="brand-mark" aria-hidden="true">●—●—●</span>
+    <span><small>CREATORE VISUALE</small><strong>Linea del tempo</strong></span>
+  </a>
+  <div class="save-state"><span id="saveStatus" aria-live="polite">Salvato</span></div>
+
+</header>
+
+<main>
+  <section class="instructions-panel" aria-labelledby="instructionsHeading">
+    <div class="instructions-head">
+      <div>
+        <span class="step-pill">PRIMA DI INIZIARE</span>
+        <h1 id="instructionsHeading">Come creare e pubblicare la linea del tempo</h1>
+        <p>Leggi questi passaggi prima di creare le card. Puoi riaprire le istruzioni in qualsiasi momento.</p>
+      </div>
+      <div class="instructions-actions">
+        <button id="topInstructionsBtn" class="button secondary" type="button" aria-expanded="false" aria-controls="topInstructionsBody">Mostra istruzioni</button>
+      </div>
+    </div>
+    <div id="topInstructionsBody" class="instructions-body" hidden>
+      <div class="instructions-grid">
+        <div class="instruction-card"><strong><span class="instruction-number">1</span>Crea le card</strong>Premi “Crea una nuova card” e inserisci data, titolo, immagine, testo e, se serve, un audio MP3.</div>
+        <div class="instruction-card"><strong><span class="instruction-number">2</span>Controlla e riordina</strong>Le card compaiono subito nell’anteprima. Trascinale nell’elenco oppure usa “Sposta prima” e “Sposta dopo”.</div>
+        <div class="instruction-card"><strong><span class="instruction-number">3</span>Esporta il sito web</strong>Premi “Esporta la linea del tempo” e scegli una cartella vuota. L’editor creerà tutti i file del sito e anche il file <code>progetto.timeline</code>, necessario soltanto per riaprire il lavoro nell’editor.</div>
+        <div class="instruction-card"><strong><span class="instruction-number">4</span>Conserva tutta la cartella</strong>Non separare i file. La cartella completa può essere pubblicata caricandola su GitHub. Conserva la cartella così com'è: ti servirà se in futuro vorrai modificare la linea del tempo.</div>
+      </div>
+      <div class="github-box">
+        <h3>Esportare e pubblicare la linea del tempo</h3>
+        <p>Quando hai finito, premi <strong>“Esporta la linea del tempo”</strong> e scegli una cartella vuota del computer.</p>
+        <p>L’editor preparerà automaticamente tutto ciò che serve. Dentro la cartella troverai il file principale <code>index.html</code>, gli altri file del sito e le cartelle con immagini, audio e testi.</p>
+        <p><strong>Conserva sempre la cartella completa.</strong> Non rinominare, non spostare e non cancellare i file che contiene, perché devono restare collegati tra loro.</p>
+        <p>Per pubblicare il lavoro online con GitHub puoi usare uno dei due aiuti qui sotto.</p>
+        <div class="github-tutorial-row">
+          <a id="githubTutorialBtn" class="button primary" href="#" target="_blank" rel="noopener noreferrer">▶ Guarda il video: come pubblicare su GitHub</a>
+          <button id="githubTextGuideBtn" class="button secondary" type="button" aria-expanded="false" aria-controls="githubTextGuide">Leggi la guida: come pubblicare su GitHub</button>
+        </div>
+        <div id="githubTextGuide" class="edit-existing-content" hidden>
+          <h4>Pubblicare la linea del tempo su GitHub</h4>
+          <p>Segui questi passaggi con calma. Non devi modificare i file creati dall’editor.</p>
+          <ol>
+            <li>Vai sul sito <strong>GitHub</strong> e accedi al tuo account. Se non ne hai uno, crealo gratuitamente.</li>
+            <li>Premi il pulsante <strong>“New repository”</strong> per creare un nuovo spazio online.</li>
+            <li>Scrivi un nome semplice per il progetto, per esempio <code>linea-del-tempo</code>.</li>
+            <li>Scegli l’opzione <strong>Public</strong> e premi <strong>“Create repository”</strong>.</li>
+            <li>Nella nuova pagina premi <strong>“uploading an existing file”</strong> oppure <strong>“Add file” → “Upload files”</strong>.</li>
+            <li>Apri sul computer la cartella creata con <strong>“Esporta la linea del tempo”</strong>.</li>
+            <li>Seleziona <strong>tutti i file e tutte le cartelle contenuti al suo interno</strong> e trascinali nella pagina di GitHub.</li>
+            <li>Attendi che il caricamento finisca, poi premi <strong>“Commit changes”</strong>.</li>
+            <li>Apri <strong>Settings</strong>, poi <strong>Pages</strong>.</li>
+            <li>In <strong>Build and deployment</strong>, scegli <strong>Deploy from a branch</strong>. Seleziona il ramo <strong>main</strong>, la cartella <strong>/(root)</strong> e premi <strong>Save</strong>.</li>
+            <li>Dopo alcuni minuti GitHub mostrerà l’indirizzo del sito pubblicato. Aprilo per controllare la linea del tempo.</li>
+          </ol>
+          <p><strong>Importante:</strong> su GitHub devi caricare tutto il contenuto della cartella, non soltanto <code>index.html</code>.</p>
+        </div>
+        <div class="edit-existing-box">
+          <button id="editExistingInstructionsBtn" class="button edit-existing-toggle" type="button" aria-expanded="false" aria-controls="editExistingInstructions">Come modificare una linea del tempo già creata <span aria-hidden="true">＋</span></button>
+          <div id="editExistingInstructions" class="edit-existing-content" hidden>
+            <ol>
+              <li>Apri questa pagina con Google Chrome o Microsoft Edge.</li>
+              <li>Premi <strong>“Apri sito da modificare”</strong>.</li>
+              <li>Seleziona la <strong>cartella completa</strong> del sito, non il solo file <code>index.html</code>.</li>
+              <li>L’editor legge <code>progetto.timeline</code> e recupera immagini, audio e testi dalle cartelle collegate.</li>
+              <li>Modifica, elimina, aggiungi o riordina le card.</li>
+              <li>Premi nuovamente <strong>“Esporta la linea del tempo”</strong> e scegli la cartella da aggiornare.</li>
+            </ol>
+            <p><strong>Importante:</strong> non rinominare o spostare <code>progetto.timeline</code>, <code>index.html</code>, <code>styles.css</code>, <code>app.js</code>, <code>data.js</code> o le cartelle <code>immagini</code>, <code>audio</code> e <code>testi</code>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="start-choice" id="startChoice" aria-labelledby="startChoiceTitle">
+    <span class="step-pill">SCEGLI COME INIZIARE</span>
+    <h2 id="startChoiceTitle">Cosa vuoi fare?</h2>
+    <p>Puoi creare una nuova linea del tempo oppure riaprire una cartella già esportata per modificarla.</p>
+    <div class="start-choice-actions">
+      <button id="createNewTimelineBtn" class="button primary choice-button" type="button">Crea nuova linea del tempo<small>Inizia dal Passo 1 con un progetto vuoto</small></button>
+      <button id="modifyExistingTimelineBtn" class="button secondary choice-button" type="button">Modifica una linea del tempo già creata<small>Seleziona la cartella completa del sito</small></button>
+    </div>
+  </section>
+
+  <div id="creationFlow" class="creation-flow" hidden>
+  <section class="project-intro" aria-labelledby="projectHeading">
+    <div class="intro-copy">
+      <span class="step-pill">PASSO 1</span>
+      <h1 id="projectHeading">Inizia dalla tua linea del tempo</h1>
+      <p>Scrivi il titolo generale. Poi crea le card una alla volta: vedrai subito il risultato.</p>
+    </div>
+    <div class="project-fields">
+      <div class="field">
+        <label for="projectTitle">Titolo della linea del tempo</label>
+        <input id="projectTitle" type="text" maxlength="100" placeholder="Esempio: Gli autori del fantasy">
+        <p class="field-error" data-error-for="projectTitle"></p>
+      </div>
+      <div class="field">
+        <label for="projectInstructions">Istruzione per chi la userà <span class="optional">facoltativa</span></label>
+        <textarea id="projectInstructions" rows="2" maxlength="300" placeholder="Esempio: Clicca una volta per ingrandire e due volte per leggere il retro."></textarea>
+      </div>
+    </div>
+  </section>
+
+  <section class="guide-bar" aria-label="Come funziona">
+    <strong>Come funziona:</strong>
+    <span><b>1</b> Aggiungi una card</span>
+    <span><b>2</b> Inserisci data, immagine, testo e audio</span>
+    <span><b>3</b> Trascina le card per riordinarle</span>
+    <span><b>4</b> Esporta la cartella completa del sito</span>
+  </section>
+
+  <section class="studio" id="workspace">
+    <aside class="cards-panel" aria-labelledby="eventsTitle">
+      <div class="panel-heading">
+        <div>
+          <span class="step-pill">PASSO 2</span>
+          <h2 id="eventsTitle">Le card della timeline</h2>
+          <p id="cardCountLabel">0 card</p>
+        </div>
+        <button id="addEventBtn" class="button primary wide" type="button">+ Crea una nuova card</button>
+      </div>
+      <div id="emptyListMessage" class="empty-state">
+        <span class="empty-icon" aria-hidden="true">＋</span>
+        <strong>Non hai ancora creato card</strong>
+        <span>Premi “Crea una nuova card” per iniziare.</span>
+      </div>
+      <div id="eventList" class="event-list" role="list" aria-label="Card create"></div>
+      <p class="drag-help">↕ Trascina una card per cambiarne la posizione nella linea del tempo.</p>
+    </aside>
+
+    <section class="live-panel" aria-labelledby="liveTitle">
+      <div class="panel-heading compact">
+        <div>
+          <span class="step-pill">RISULTATO IN TEMPO REALE</span>
+          <h2 id="liveTitle">Guarda le card prendere forma</h2>
+          <p>Ogni modifica appare subito qui.</p>
+        </div>
+      </div>
+      <div id="timelinePreview" class="timeline-stage live-stage"></div>
+      <div class="live-tip">Primo clic: ingrandisce la card · Secondo clic: mostra il testo e avvia l’audio.</div>
+    </section>
+
+    <section id="eventEditor" class="edit-panel" aria-labelledby="formTitle">
+      <div class="panel-heading compact editor-heading">
+        <div>
+          <span class="step-pill">PASSO 3</span>
+          <h2 id="formTitle">Crea il contenuto della card</h2>
+          <p>I cambiamenti vengono salvati automaticamente.</p>
+        </div>
+        <div class="card-tools">
+          <button id="duplicateEventBtn" class="icon-button" type="button" title="Crea una copia di questa card">Crea una copia</button>
+          <button id="deleteEventBtn" class="icon-button danger" type="button">🗑 Elimina questa card</button>
+        </div>
+      </div>
+
+      <form id="projectForm" novalidate>
+        <div id="noEventSelected" class="empty-state large">
+          <span class="empty-icon" aria-hidden="true">←</span>
+          <strong>Crea o scegli una card</strong>
+          <span>I campi da compilare compariranno qui.</span>
+        </div>
+
+        <div id="eventFields" hidden>
+          <section class="form-section essential">
+            <div class="section-heading">
+              <span class="section-icon">1</span>
+              <div><h3>Data e titolo</h3><p>Queste informazioni si vedranno sul fronte.</p></div>
+            </div>
+            <div class="form-grid">
+              <div class="field">
+                <label for="eventDate">Data o periodo</label>
+                <input id="eventDate" type="text" maxlength="40" placeholder="Esempio: 1937 oppure XX secolo">
+                <p class="field-error" data-error-for="eventDate"></p>
+              </div>
+              <div class="field">
+                <label for="eventTitle">Titolo della card</label>
+                <input id="eventTitle" type="text" maxlength="80" placeholder="Esempio: J.R.R. Tolkien">
+                <p class="field-error" data-error-for="eventTitle"></p>
+              </div>
+              <div class="field full">
+                <label for="eventSubtitle">Sottotitolo <span class="optional">facoltativo</span></label>
+                <input id="eventSubtitle" type="text" maxlength="100" placeholder="Esempio: Lo Hobbit">
+              </div>
+            </div>
+          </section>
+
+          <section class="form-section media-section">
+            <div class="section-heading">
+              <span class="section-icon">2</span>
+              <div><h3>Immagine</h3><p>Scegli la fotografia che comparirà sul fronte della card.</p></div>
+            </div>
+            <label class="drop-zone" for="imageInput">
+              <span class="drop-icon" aria-hidden="true">▧</span>
+              <strong>Clicca qui per scegliere un’immagine</strong>
+              <span>PNG, JPG, WEBP o GIF</span>
+            </label>
+            <input id="imageInput" class="visually-hidden" type="file" accept="image/png,image/jpeg,image/webp,image/gif">
+            <div id="imagePreview" class="media-preview">Nessuna immagine caricata</div>
+            <div class="media-actions"><button id="removeImageBtn" class="text-button danger" type="button">Rimuovi l’immagine</button></div>
+            <div class="field">
+              <label for="imageAlt">Descrizione dell’immagine</label>
+              <input id="imageAlt" type="text" maxlength="180" placeholder="Esempio: Ritratto di J.R.R. Tolkien">
+              <p class="field-help">Serve alle persone che usano uno screen reader.</p>
+              <p class="field-error" data-error-for="imageAlt"></p>
+            </div>
+          </section>
+
+          <section class="form-section text-section">
+            <div class="section-heading">
+              <span class="section-icon">3</span>
+              <div><h3>Testo del retro</h3><p>Questo testo apparirà quando la card si gira.</p></div>
+            </div>
+            <div class="field">
+              <label for="eventText">Scrivi il contenuto</label>
+              <textarea id="eventText" rows="10" maxlength="1800" placeholder="Scrivi qui le informazioni, la biografia o la spiegazione..."></textarea>
+              <p class="field-help">Per il grassetto usa due asterischi: **parola**.</p>
+              <p class="field-error" data-error-for="eventText"></p>
+            </div>
+          </section>
+
+          <section class="form-section audio-section">
+            <div class="section-heading">
+              <span class="section-icon">4</span>
+              <div><h3>Audio MP3 <span class="optional">facoltativo</span></h3><p>L’audio parte quando si apre il retro della card.</p></div>
+            </div>
+            <label class="drop-zone audio" for="audioInput">
+              <span class="drop-icon" aria-hidden="true">▶</span>
+              <strong>Clicca qui per scegliere un audio</strong>
+              <span>File MP3 dal computer</span>
+            </label>
+            <input id="audioInput" class="visually-hidden" type="file" accept="audio/mpeg,.mp3">
+            <div id="audioPreview" class="media-preview">Nessun audio caricato</div>
+            <div class="media-actions">
+              <button id="removeAudioBtn" class="text-button danger" type="button">Rimuovi l’audio</button>
+            </div>
+          </section>
+
+          <details class="form-section optional-section">
+            <summary><span class="section-icon">5</span><span><strong>Collegamenti facoltativi</strong><small>Libri, video, film o siti da aprire dalla card.</small></span></summary>
+            <div class="details-content">
+              <div id="linksEditor" class="links-editor"></div>
+              <button id="addLinkBtn" class="button secondary" type="button">+ Aggiungi un collegamento</button>
+            </div>
+          </details>
+
+          <div class="editor-bottom">
+            <div class="move-actions">
+              <span>Posizione nella timeline:</span>
+              <button id="moveLeftBtn" class="button secondary compact" type="button">← Sposta prima</button>
+              <button id="moveRightBtn" class="button secondary compact" type="button">Sposta dopo →</button>
+            </div>
+            <div class="main-actions">
+              <button id="saveCardBtn" class="button secondary" type="button">Salva questa card</button>
+              <button id="saveAndNewBtn" class="button primary" type="button">Salva e crea la card successiva</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+  </section>
+
+  <section class="finish-panel" id="previewSection" aria-labelledby="previewTitle">
+    <div>
+      <span class="step-pill">PASSO 4</span>
+      <h2 id="previewTitle">Controlla ed esporta la linea del tempo</h2>
+      <p>Quando hai completato tutte le card, guarda l’anteprima completa e poi esporta la cartella pronta per GitHub.</p>
+    </div>
+    <div class="finish-actions preview-actions">
+      <button id="previewBottomBtn" class="button secondary" type="button">Guarda anteprima</button>
+      <button id="exportTimelineBtn" class="button primary" type="button">Esporta la linea del tempo</button>
+      <div>
+        <p class="field-help">Usalo solo quando una card dell’anteprima sta riproducendo un audio e vuoi fermarlo subito.</p>
+      </div>
+    </div>
+    <div id="validationSummary" class="validation-summary" aria-live="polite"></div>
+  </section>
+  </div>
+</main>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>
+(() => {
+'use strict';
+const $ = s => document.querySelector(s); const $$ = s => Array.from(document.querySelectorAll(s));
+const uid = () => `card-${Date.now()}-${Math.random().toString(36).slice(2,8)}`;
+const defaultProject = () => ({version:2,title:'La mia linea del tempo',instructions:'Clicca una volta sulla card per ingrandirla. Clicca una seconda volta per girarla e ascoltare l’audio.',cards:[]});
+let project = loadLocal() || defaultProject(); let selectedId = project.cards[0]?.id || null; let currentAudio=null; let saveTimer=null;
+function showCreationFlow(scroll=true){const flow=$('#creationFlow');if(flow)flow.hidden=false;if(scroll)setTimeout(()=>$('#projectHeading')?.scrollIntoView({behavior:'smooth',block:'start'}),30)}
+const els={title:$('#projectTitle'),instructions:$('#projectInstructions'),list:$('#eventList'),emptyList:$('#emptyListMessage'),fields:$('#eventFields'),noSel:$('#noEventSelected'),date:$('#eventDate'),cardTitle:$('#eventTitle'),subtitle:$('#eventSubtitle'),text:$('#eventText'),image:$('#imageInput'),imageAlt:$('#imageAlt'),imagePreview:$('#imagePreview'),audio:$('#audioInput'),audioPreview:$('#audioPreview'),links:$('#linksEditor'),preview:$('#timelinePreview'),saveStatus:$('#saveStatus'),validation:$('#validationSummary'),toast:$('#toast')};
+function selected(){return project.cards.find(c=>c.id===selectedId)||null}
+function escapeHtml(v=''){return v.replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]))}
+function formatText(v=''){return escapeHtml(v).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>')}
+function fileToDataUrl(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)})}
+function bytes(n=0){if(!n)return '0 KB'; return n<1048576?`${(n/1024).toFixed(1)} KB`:`${(n/1048576).toFixed(1)} MB`}
+function saveNow(){clearTimeout(saveTimer);try{localStorage.setItem('timeline-builder-v2',JSON.stringify(project));els.saveStatus.textContent=`Salvato alle ${new Date().toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'})}`}catch{els.saveStatus.textContent='Modifiche presenti: usa Esporta la linea del tempo'}}
+function markDirty(){els.saveStatus.textContent='Salvataggio…';clearTimeout(saveTimer);saveTimer=setTimeout(saveNow,250)}
+function loadLocal(){try{return JSON.parse(localStorage.getItem('timeline-builder-v2')||'null')}catch{return null}}
+function toast(msg){els.toast.textContent=msg;els.toast.classList.add('show');setTimeout(()=>els.toast.classList.remove('show'),2600)}
+function completeness(c){const missing=[];if(!c.date?.trim())missing.push('data');if(!c.title?.trim())missing.push('titolo');if(!c.text?.trim())missing.push('testo');if(!c.imageData)missing.push('immagine');if(c.imageData&&!c.imageAlt?.trim())missing.push('descrizione immagine');return missing}
+function deleteCard(id=selectedId){const i=project.cards.findIndex(c=>c.id===id);if(i<0)return;const card=project.cards[i];const label=card.title?.trim()||`Card ${i+1}`;if(!confirm(`Eliminare la card \"${label}\"?\n\nLa card sarà rimossa dalla linea del tempo.`))return;project.cards.splice(i,1);if(selectedId===id)selectedId=project.cards[i]?.id||project.cards[i-1]?.id||null;markDirty();renderAll();toast('Card eliminata')}
+function renderList(){
+  els.list.innerHTML='';
+  els.emptyList.hidden=project.cards.length>0;
+  project.cards.forEach((c,i)=>{
+    const missing=completeness(c);
+    const item=document.createElement('div');
+    item.className='event-list-item';
+    item.dataset.id=c.id;
+    item.draggable=true;
+    item.setAttribute('role','listitem');
+    item.setAttribute('aria-current',c.id===selectedId?'true':'false');
+    item.innerHTML=`<span class="drag-handle" title="Trascina per spostare" aria-hidden="true">⋮⋮</span>${c.imageData?`<img class="event-thumb" src="${c.imageData}" alt="">`:'<div class="event-thumb placeholder-thumb">Immagine</div>'}<button type="button" class="event-select"><span class="event-list-title">${escapeHtml(c.title||`Card ${i+1}`)}</span><span class="event-list-meta">${escapeHtml(c.date||'Data mancante')} · ${c.audioData?'Audio presente':'Senza audio'}</span></button><span class="status-badge ${missing.length?'status-incomplete':'status-complete'}">${missing.length?'Incompleta':'Completa'}</span><button type="button" class="text-button danger list-delete" aria-label="Elimina ${escapeHtml(c.title||`Card ${i+1}`)}">Elimina</button>`;
+    item.querySelector('.event-select').onclick=()=>{selectedId=c.id;renderAll();$('#eventEditor').scrollIntoView({behavior:'smooth',block:'start'})};
+    item.querySelector('.list-delete').onclick=e=>{e.stopPropagation();deleteCard(c.id)};
+    item.addEventListener('dragstart',e=>{e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',c.id);item.classList.add('dragging')});
+    item.addEventListener('dragend',()=>item.classList.remove('dragging'));
+    item.addEventListener('dragover',e=>{e.preventDefault();e.dataTransfer.dropEffect='move';item.classList.add('drag-over')});
+    item.addEventListener('dragleave',()=>item.classList.remove('drag-over'));
+    item.addEventListener('drop',e=>{e.preventDefault();item.classList.remove('drag-over');const draggedId=e.dataTransfer.getData('text/plain');if(!draggedId||draggedId===c.id)return;const from=project.cards.findIndex(card=>card.id===draggedId);const to=project.cards.findIndex(card=>card.id===c.id);if(from<0||to<0)return;const [moved]=project.cards.splice(from,1);project.cards.splice(to,0,moved);selectedId=draggedId;saveNow();renderAll();toast('Card spostata')});
+    els.list.appendChild(item);
+  })
+}
+function renderEditor(){const c=selected();els.noSel.hidden=!!c;els.fields.hidden=!c;if(!c)return;els.date.value=c.date||'';els.cardTitle.value=c.title||'';els.subtitle.value=c.subtitle||'';els.text.value=c.text||'';els.imageAlt.value=c.imageAlt||'';renderImage(c);renderAudio(c);renderLinks(c);updateCounts()}
+function renderImage(c){els.imagePreview.innerHTML=c.imageData?`<img src="${c.imageData}" alt=""><div class="media-meta"><strong>${escapeHtml(c.imageName||'Immagine')}</strong><br>${bytes(c.imageSize)}</div>`:'Nessuna immagine caricata'}
+function renderAudio(c){els.audioPreview.innerHTML=c.audioData?`<div style="width:100%"><div class="media-meta"><strong>${escapeHtml(c.audioName||'Audio MP3')}</strong> · ${bytes(c.audioSize)}</div><audio id="editorAudioPlayer" class="audio-player" controls preload="metadata" src="${c.audioData}"></audio></div>`:'Nessun audio caricato'}
+function renderLinks(c){els.links.innerHTML='';(c.links||[]).forEach((l,i)=>{const row=document.createElement('div');row.className='link-row';row.innerHTML=`<div class="field"><label>Tipo</label><select data-k="type"><option value="book">Libro</option><option value="film">Film</option><option value="video">Video</option><option value="site">Sito</option><option value="document">Documento</option><option value="other">Altro</option></select></div><div class="field"><label>Testo pulsante</label><input data-k="label" value="${escapeHtml(l.label||'')}"></div><div class="field"><label>Indirizzo web</label><input data-k="url" value="${escapeHtml(l.url||'')}" placeholder="https://..."></div><button type="button" class="button button-danger button-small">Rimuovi</button>`;row.querySelector('select').value=l.type||'other';row.querySelectorAll('input,select').forEach(inp=>inp.oninput=()=>{l[inp.dataset.k]=inp.value;markDirty();renderPreview();renderList()});row.querySelector('button').onclick=()=>{c.links.splice(i,1);markDirty();renderAll()};els.links.appendChild(row)})}
+function updateCounts(){let p=$('#textCount');if(!p){p=document.createElement('p');p.id='textCount';p.className='char-count';els.text.after(p)}p.textContent=`${els.text.value.length}/1800 caratteri`}
+function resetPreviewCards(scope){scope.querySelectorAll('.timeline-card-wrap').forEach(w=>{const c=w.querySelector('.timeline-card');c?.classList.remove('is-flipped');w.classList.remove('is-active','links-hidden');c?.setAttribute('aria-expanded','false');c?.setAttribute('aria-pressed','false')});stopAudio()}
+function renderPreview(target=els.preview){stopAudio();target.innerHTML='';target.onclick=null;if(!project.cards.length){target.innerHTML='<div class="empty-editor">Aggiungi almeno una card per vedere l’anteprima.</div>';return}const t=document.createElement('div');t.className='timeline';t.innerHTML='<div class="timeline-line" aria-hidden="true"></div>';project.cards.forEach(c=>t.appendChild(makeTimelineCard(c)));target.appendChild(t);target.onclick=e=>{if(e.target.closest('.timeline-card-wrap'))return;resetPreviewCards(target)}}
+function makeTimelineCard(c){
+  const wrap=document.createElement('article');
+  wrap.className='timeline-card-wrap';
+  wrap.dataset.id=c.id;
+  wrap.innerHTML=`<div class="timeline-date">${escapeHtml(c.date||'Data')}</div><div class="timeline-stem"></div><div class="timeline-star">★</div><div class="timeline-label"><strong>${escapeHtml(c.title||'Titolo')}</strong><span>${escapeHtml(c.subtitle||'')}</span></div><div class="timeline-card" role="button" tabindex="0" aria-expanded="false" aria-pressed="false" aria-label="Card ${escapeHtml(c.title||'')}. Prima attivazione: ingrandisci. Seconda attivazione: mostra il retro."><div class="timeline-card-inner"><div class="timeline-face timeline-front">${c.imageData?`<img src="${c.imageData}" alt="${escapeHtml(c.imageAlt||'')}">`:'<div class="empty-editor">Nessuna immagine</div>'}</div><div class="timeline-face timeline-back"><button class="timeline-close" type="button" aria-label="Chiudi la card e riduci lo zoom">×</button><p>${formatText(c.text||'Nessun testo')}</p><div class="audio-state" aria-live="polite"></div></div></div></div><div class="timeline-links">${(c.links||[]).filter(l=>l.label&&l.url).map(l=>`<a class="timeline-link" data-type="${escapeHtml(l.type||'other')}" href="${escapeHtml(normalizeUrl(l.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(l.label)}</a>`).join('')}</div>`;
+  const card=wrap.querySelector('.timeline-card');
+  const close=wrap.querySelector('.timeline-close');
+  const reset=(deactivate=true)=>{
+    card.classList.remove('is-flipped');
+    wrap.classList.remove('links-hidden');
+    if(deactivate) wrap.classList.remove('is-active');
+    card.setAttribute('aria-expanded','false');
+    card.setAttribute('aria-pressed',deactivate?'false':'true');
+    stopAudio();
+  };
+  const resetOthers=()=>{
+    $$('.timeline-card-wrap').forEach(otherWrap=>{
+      if(otherWrap===wrap)return;
+      const otherCard=otherWrap.querySelector('.timeline-card');
+      otherCard?.classList.remove('is-flipped');
+      otherWrap.classList.remove('is-active','links-hidden');
+      otherCard?.setAttribute('aria-expanded','false');
+      otherCard?.setAttribute('aria-pressed','false');
+    });
+    stopAudio();
+  };
+  const activate=()=>{
+    resetOthers();
+    wrap.classList.add('is-active');
+    card.setAttribute('aria-pressed','true');
+    wrap.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  };
+  const advance=()=>{
+    if(!wrap.classList.contains('is-active')){
+      activate();
+      return;
+    }
+    if(!card.classList.contains('is-flipped')){
+      card.classList.add('is-flipped');
+      wrap.classList.add('links-hidden');
+      card.setAttribute('aria-expanded','true');
+      playCardAudio(c,wrap);
+      return;
+    }
+    reset(false);
+  };
+  card.onclick=e=>{if(e.target.closest('a,.timeline-close'))return;advance()};
+  card.onkeydown=e=>{
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();advance()}
+    if(e.key==='Escape'){e.preventDefault();reset(true);card.focus()}
+  };
+  close.onclick=e=>{e.stopPropagation();reset(true);card.focus()};
+  return wrap;
+}
+function normalizeUrl(url=''){if(!url)return '#';return /^https?:\/\//i.test(url)?url:`https://${url}`}
+function playCardAudio(c,wrap){stopAudio();const state=wrap.querySelector('.audio-state');if(!c.audioData){state.textContent='';return}currentAudio=new Audio(c.audioData);state.textContent='Audio in riproduzione';currentAudio.onended=()=>{state.textContent='Audio terminato';currentAudio=null};currentAudio.onerror=()=>{state.textContent='Impossibile riprodurre l’audio';currentAudio=null};currentAudio.play().catch(()=>{state.textContent='Premi nuovamente la card per avviare l’audio.'})}
+function stopAudio(){if(currentAudio){currentAudio.pause();currentAudio.currentTime=0;currentAudio=null}$$('.audio-state').forEach(x=>x.textContent='')}
+function renderAll(){els.title.value=project.title||'';els.instructions.value=project.instructions||'';renderList();renderEditor();renderPreview();renderValidation(false)}
+function validateProject(show=true){const issues=[];if(!project.title?.trim())issues.push('Manca il titolo del progetto.');if(!project.cards.length)issues.push('Aggiungi almeno una card.');project.cards.forEach((c,i)=>{completeness(c).forEach(m=>issues.push(`Card ${i+1}: manca ${m}.`));(c.links||[]).forEach((l,j)=>{if((l.label&&!l.url)||(!l.label&&l.url))issues.push(`Card ${i+1}, link ${j+1}: completa sia il testo sia l’indirizzo.`)})});if(show)renderValidation(true,issues);return issues}
+function renderValidation(show=false,issues=validateProject(false)){els.validation.hidden=!show||issues.length===0;els.validation.innerHTML=issues.length?`<strong>Controllo del progetto</strong><ul>${issues.map(i=>`<li>${escapeHtml(i)}</li>`).join('')}</ul>`:''}
+function addCard(){const c={id:uid(),date:'',title:'Nuova card',subtitle:'',text:'',imageData:'',imageName:'',imageSize:0,imageAlt:'',audioData:'',audioName:'',audioSize:0,links:[]};project.cards.push(c);selectedId=c.id;markDirty();renderAll();toast('Nuova card aggiunta')}
+function download(name,content,type){const blob=new Blob([content],{type});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function standaloneHtml(){const data=JSON.stringify(project).replace(/</g,'\\u003c');return `<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(project.title)}</title><style>${document.querySelector('style[data-export]')?.textContent||exportCss()}</style></head><body><header><h1>${escapeHtml(project.title)}</h1><p>${escapeHtml(project.instructions)}</p></header><main id="app"></main><script>const project=${data};${exportJs()}<\/script></body></html>`}
+function exportCss(){return `:root{--paper:#f5f1e8;--ink:#2b241c;--line:#d8c49d;--violet:#5b3f96;--audio:#215c63;--danger:#9c3030}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,sans-serif;background:var(--paper);color:var(--ink)}header{padding:20px;text-align:center;background:#fffdf8;border-bottom:2px solid var(--line)}header h1{margin:.2rem 0;text-transform:uppercase}header p{max-width:900px;margin:.5rem auto;line-height:1.5}.stage{padding:34px clamp(16px,4vw,72px) 90px;min-height:620px;overflow:visible}.timeline{--card-min:205px;position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--card-min)),1fr));align-items:start;gap:42px 28px;width:100%;max-width:1500px;margin:0 auto;padding:24px 0 80px;isolation:isolate}.timeline.count-1{max-width:280px}.timeline.count-2{max-width:620px}.timeline.count-3{max-width:930px}.timeline.count-4{max-width:1240px}.timeline.count-many{--card-min:190px}.line{display:none}.wrap{position:relative;width:100%;max-width:235px;min-width:0;margin:0 auto;z-index:2;transform-origin:center center;transition:transform .3s ease,filter .3s ease;overflow:visible}.wrap::before{content:"";position:absolute;left:50%;top:43px;width:calc(100% + 28px);height:10px;transform:translateX(-50%);border-radius:999px;background:linear-gradient(90deg,#d7c7ef,#bfa7df,#d7c7ef);z-index:0}.wrap:hover,.wrap:focus-within,.wrap.active{z-index:999;transform:scale(1.32);filter:drop-shadow(0 18px 28px rgba(0,0,0,.22))}.wrap.links-hidden .links{display:none!important}.date{position:relative;z-index:10;width:max-content;max-width:100%;margin:0 auto 8px;padding:7px 10px;border-radius:999px;background:#fff;border:2px solid var(--line);font-weight:800;text-align:center}.stem{position:relative;z-index:2;width:4px;height:28px;background:#8a6835;margin:auto}.star{position:relative;z-index:3;text-align:center;color:#e3b52f;font-size:1.45rem;line-height:1}.label{position:relative;z-index:4;background:#fff4db;border:3px solid var(--line);border-bottom:0;border-radius:15px 15px 0 0;padding:9px;text-align:center}.label strong,.label span{display:block}.label span{color:var(--violet);font-size:.78rem;font-weight:800;margin-top:4px}.card{position:relative;z-index:3;height:270px;perspective:1200px;cursor:pointer;overflow:visible}.card:focus-visible{outline:4px solid #235ea8;outline-offset:4px}.inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .72s ease}.card.flipped .inner{transform:rotateY(180deg)}.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:3px solid var(--line);border-top:0;border-radius:0 0 15px 15px;overflow:hidden;background:#fff}.front{transform:rotateY(0deg)}.front img{width:100%;height:100%;object-fit:cover;object-position:center top}.back{transform:rotateY(180deg);padding:12px;display:flex;flex-direction:column;overflow:auto;background:linear-gradient(180deg,#fffdf8,#f7ecd8)}.back-top{display:flex;justify-content:flex-end}.close{width:32px;height:32px;border-radius:50%;border:2px solid var(--line);background:#fff;font-weight:900;cursor:pointer}.back p{font-size:.82rem;line-height:1.42;margin:6px 0 12px}.audio-controls{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:auto}.audio-button{min-height:38px;padding:8px 9px;border-radius:9px;border:2px solid var(--audio);background:#eef7f7;color:#173e43;font-size:.72rem;font-weight:800;cursor:pointer}.audio-button.stop-audio{border-color:var(--danger);background:#fff1f1;color:#5a1414}.audio-button:disabled{opacity:.48;cursor:not-allowed}.audio-state{min-height:1.1em;font-size:.72rem;color:var(--violet);font-weight:800;margin-top:7px;text-align:center}.links{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin-top:10px;position:relative;z-index:30}.links a{padding:7px 9px;border-radius:9px;text-decoration:none;font-size:.72rem;font-weight:800;border:2px solid #6b8ca3;background:#e7f5ff;color:#183747}.links a[data-type="film"],.links a[data-type="video"]{border-color:#b88b43;background:#f5dfad;color:#34220e}@media(min-width:1200px){.timeline.count-1 .wrap,.timeline.count-2 .wrap,.timeline.count-3 .wrap,.timeline.count-4 .wrap{max-width:245px}.timeline.count-1 .wrap:hover,.timeline.count-1 .wrap:focus-within,.timeline.count-1 .wrap.active,.timeline.count-2 .wrap:hover,.timeline.count-2 .wrap:focus-within,.timeline.count-2 .wrap.active,.timeline.count-3 .wrap:hover,.timeline.count-3 .wrap:focus-within,.timeline.count-3 .wrap.active{transform:scale(1.42)}}@media(max-width:760px){.stage{padding:24px 16px 65px}.timeline{grid-template-columns:1fr;gap:34px;padding-top:12px}.wrap{max-width:285px}.wrap::before{width:100%}.wrap:hover,.wrap:focus-within,.wrap.active{transform:scale(1.08)}.card{height:300px}.audio-controls{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.inner,.wrap{transition:none}}`}
+
+
+function exportJs(){return `let audio=null;let audioOwner=null;const esc=s=>String(s||'').replace(/[&<>\"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[m]));const fmt=s=>esc(s).replace(/\\*\\*(.+?)\\*\\*/g,'<strong>$1</strong>').replace(/\\n/g,'<br>');const clearAudioState=()=>document.querySelectorAll('.audio-state').forEach(x=>x.textContent='');const stop=(message='')=>{if(audio){audio.pause();audio.currentTime=0;audio=null}if(audioOwner){const state=audioOwner.querySelector('.audio-state');if(state)state.textContent=message;audioOwner=null}else if(!message)clearAudioState()};const reset=(w,deactivate=true)=>{const c=w.querySelector('.card');c.classList.remove('flipped');w.classList.remove('links-hidden');if(deactivate)w.classList.remove('active');c.setAttribute('aria-expanded','false');c.setAttribute('aria-pressed',deactivate?'false':'true');if(audioOwner===w)stop()};const resetOthers=current=>{document.querySelectorAll('.wrap').forEach(w=>{if(w!==current)reset(w,true)});if(audioOwner&&audioOwner!==current)stop()};const app=document.getElementById('app');const stage=document.createElement('div');stage.className='stage';const tl=document.createElement('div');const count=project.cards.length;tl.className='timeline '+(count<=4?'count-'+count:'count-many');tl.setAttribute('data-card-count',String(count));project.cards.forEach(c=>{const w=document.createElement('article');w.className='wrap';const hasAudio=Boolean(c.audioData);w.innerHTML='<div class="date">'+esc(c.date)+'</div><div class="stem"></div><div class="star">★</div><div class="label"><strong>'+esc(c.title)+'</strong><span>'+esc(c.subtitle)+'</span></div><div class="card" tabindex="0" role="button" aria-expanded="false" aria-pressed="false" aria-label="Card '+esc(c.title)+'. Prima attivazione: ingrandisci. Seconda attivazione: mostra il retro."><div class="inner"><div class="face front">'+(c.imageData?'<img src="'+c.imageData+'" alt="'+esc(c.imageAlt)+'">':'')+'</div><div class="face back"><div class="back-top"><button class="close" type="button" aria-label="Chiudi la card e riduci lo zoom">×</button></div><p>'+fmt(c.text)+'</p><div class="audio-controls"><button class="audio-button play-audio" type="button"'+(hasAudio?'':' disabled')+'>▶ Ascolta audio</button><button class="audio-button stop-audio" type="button"'+(hasAudio?'':' disabled')+'>■ Interrompi audio</button></div><div class="audio-state" aria-live="polite"></div></div></div></div><div class="links">'+(c.links||[]).filter(l=>l.label&&l.url).map(l=>'<a data-type="'+esc(l.type||'other')+'" href="'+(/^https?:\\/\\//i.test(l.url)?esc(l.url):'https://'+esc(l.url))+'" target="_blank" rel="noopener noreferrer">'+esc(l.label)+'</a>').join('')+'</div>';const card=w.querySelector('.card');const close=w.querySelector('.close');const playBtn=w.querySelector('.play-audio');const stopBtn=w.querySelector('.stop-audio');const state=w.querySelector('.audio-state');const activate=()=>{resetOthers(w);w.classList.add('active');card.setAttribute('aria-pressed','true');w.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})};const playAudio=()=>{if(!c.audioData){state.textContent='';return}stop();audioOwner=w;audio=new Audio(c.audioData);state.textContent='Audio in riproduzione';audio.onended=()=>{state.textContent='Audio terminato';audio=null;audioOwner=null};audio.onerror=()=>{state.textContent='Impossibile riprodurre l’audio';audio=null;audioOwner=null};audio.play().catch(()=>{state.textContent='Premi di nuovo Ascolta audio';audio=null;audioOwner=null})};const advance=()=>{if(!w.classList.contains('active')){activate();return}if(!card.classList.contains('flipped')){card.classList.add('flipped');w.classList.add('links-hidden');card.setAttribute('aria-expanded','true');return}reset(w,false)};card.onclick=e=>{if(!e.target.closest('a,.close,.audio-button'))advance()};card.onkeydown=e=>{if((e.key==='Enter'||e.key===' ')&&!e.target.closest('.audio-button,.close')){e.preventDefault();advance()}if(e.key==='Escape'){e.preventDefault();reset(w,true);card.focus()}};playBtn.onclick=e=>{e.stopPropagation();playAudio()};stopBtn.onclick=e=>{e.stopPropagation();if(audioOwner===w)stop('Audio interrotto');else state.textContent='Nessun audio in riproduzione'};close.onclick=e=>{e.stopPropagation();reset(w,true);card.focus()};tl.appendChild(w)});stage.appendChild(tl);stage.addEventListener('click',e=>{if(e.target.closest('.wrap'))return;document.querySelectorAll('.wrap').forEach(w=>reset(w,true));stop()});app.appendChild(stage);window.addEventListener('beforeunload',()=>stop());`}
+
+function safeFileName(value,fallback='file'){
+  const clean=String(value||fallback).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9._-]+/g,'-').replace(/^-+|-+$/g,'').toLowerCase();
+  return clean||fallback;
+}
+function extensionFromName(name,fallback){
+  const match=String(name||'').match(/\.([a-zA-Z0-9]{1,8})$/);
+  return match?`.${match[1].toLowerCase()}`:fallback;
+}
+function dataUrlToBlob(dataUrl){
+  const [meta,data]=String(dataUrl).split(',');
+  const mime=(meta.match(/data:([^;]+)/)||[])[1]||'application/octet-stream';
+  const bytes=atob(data||'');
+  const array=new Uint8Array(bytes.length);
+  for(let i=0;i<bytes.length;i++)array[i]=bytes.charCodeAt(i);
+  return new Blob([array],{type:mime});
+}
+async function writeFileToDirectory(directory,name,content){
+  const handle=await directory.getFileHandle(name,{create:true});
+  const writable=await handle.createWritable();
+  await writable.write(content);
+  await writable.close();
+}
+async function getNestedFile(directory,path){
+  const parts=String(path||'').split('/').filter(Boolean);
+  let current=directory;
+  for(let i=0;i<parts.length-1;i++) current=await current.getDirectoryHandle(parts[i]);
+  const handle=await current.getFileHandle(parts.at(-1));
+  return await handle.getFile();
+}
+async function fileToDataUrlFromDirectory(directory,path){
+  if(!path)return '';
+  const file=await getNestedFile(directory,path);
+  return await fileToDataUrl(file);
+}
+async function openExportedSite(){
+  if(!window.showDirectoryPicker){alert('Questa funzione richiede Google Chrome o Microsoft Edge aggiornato.');return}
+  let root;
+  try{root=await window.showDirectoryPicker({mode:'read'})}catch(error){if(error?.name!=='AbortError')alert('Non è stato possibile aprire la cartella scelta.');return}
+  try{
+    const projectFile=await getNestedFile(root,'progetto.timeline');
+    const saved=JSON.parse(await projectFile.text());
+    const rebuilt={version:3,title:saved.title||'',instructions:saved.instructions||'',cards:[]};
+    for(const c of saved.cards||[]){
+      let text='';
+      try{text=await (await getNestedFile(root,c.textPath)).text()}catch{}
+      let imageData='';
+      try{imageData=await fileToDataUrlFromDirectory(root,c.imageData)}catch{}
+      let audioData='';
+      try{audioData=await fileToDataUrlFromDirectory(root,c.audioData)}catch{}
+      rebuilt.cards.push({...c,text,imageData,audioData,imageName:(c.imageData||'').split('/').pop()||'',audioName:(c.audioData||'').split('/').pop()||'',imageSize:0,audioSize:0});
+    }
+    project=rebuilt;selectedId=project.cards[0]?.id||null;markDirty();renderAll();showCreationFlow();toast('Linea del tempo aperta: ora puoi modificarla');
+  }catch(error){console.error(error);alert('Nella cartella scelta non è stato trovato un progetto modificabile valido. Verifica che contenga il file progetto.timeline creato dall’editor.');}
+}
+async function createSiteFolder(){
+  const issues=validateProject(true);
+  if(issues.length){toast('Correggi i campi indicati prima di esportare il sito');return}
+  if(!window.showDirectoryPicker){
+    alert('Questa funzione richiede Google Chrome o Microsoft Edge aggiornato. Apri l’editor con uno di questi browser e riprova.');
+    return;
+  }
+  let root;
+  try{root=await window.showDirectoryPicker({mode:'readwrite'})}catch(error){if(error?.name!=='AbortError')alert('Non è stato possibile aprire la cartella scelta.');return}
+  const imagesDir=await root.getDirectoryHandle('immagini',{create:true});
+  const audioDir=await root.getDirectoryHandle('audio',{create:true});
+  const textsDir=await root.getDirectoryHandle('testi',{create:true});
+  const exported={version:3,title:project.title,instructions:project.instructions,cards:[]};
+  for(let i=0;i<project.cards.length;i++){
+    const c=project.cards[i];
+    const number=String(i+1).padStart(2,'0');
+    const base=`card-${number}-${safeFileName(c.title,'card')}`;
+    const textName=`${base}.txt`;
+    await writeFileToDirectory(textsDir,textName,c.text||'');
+    let imagePath='';
+    if(c.imageData){
+      const imageName=`${base}${extensionFromName(c.imageName,'.jpg')}`;
+      await writeFileToDirectory(imagesDir,imageName,dataUrlToBlob(c.imageData));
+      imagePath=`immagini/${imageName}`;
+    }
+    let audioPath='';
+    if(c.audioData){
+      const audioName=`${base}${extensionFromName(c.audioName,'.mp3')}`;
+      await writeFileToDirectory(audioDir,audioName,dataUrlToBlob(c.audioData));
+      audioPath=`audio/${audioName}`;
+    }
+    exported.cards.push({id:c.id,date:c.date,title:c.title,subtitle:c.subtitle,imageData:imagePath,imageAlt:c.imageAlt,audioData:audioPath,textPath:`testi/${textName}`,links:c.links||[]});
+  }
+  const dataJs=`window.TIMELINE_PROJECT=${JSON.stringify(exported,null,2).replace(/</g,'\\u003c')};`;
+  const appJs=`(async()=>{const project=window.TIMELINE_PROJECT;await Promise.all(project.cards.map(async c=>{try{const response=await fetch(c.textPath);c.text=response.ok?await response.text():'Testo non disponibile';}catch{c.text='Testo non disponibile. Pubblica la cartella su un server o su GitHub Pages.';}}));${exportJs()}})();`;
+  const indexHtml=`<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(project.title)}</title><link rel="stylesheet" href="styles.css"></head><body><header><h1>${escapeHtml(project.title)}</h1><p>${escapeHtml(project.instructions)}</p></header><main id="app"></main><script src="data.js"><\/script><script src="app.js"><\/script></body></html>`;
+  await writeFileToDirectory(root,'index.html',indexHtml);
+  await writeFileToDirectory(root,'styles.css',exportCss());
+  await writeFileToDirectory(root,'data.js',dataJs);
+  await writeFileToDirectory(root,'app.js',appJs);
+  await writeFileToDirectory(root,'progetto.timeline',JSON.stringify(exported,null,2));
+  toast('Linea del tempo esportata correttamente');
+  alert('Il sito web è pronto. Mantieni insieme index.html, styles.css, app.js, data.js, progetto.timeline e le cartelle immagini, audio e testi. Per pubblicarlo su GitHub, carica tutto il contenuto della cartella.');
+}
+
+els.title.oninput=()=>{project.title=els.title.value;markDirty();renderPreview()};els.instructions.oninput=()=>{project.instructions=els.instructions.value;markDirty()};
+[['date','eventDate'],['title','eventTitle'],['subtitle','eventSubtitle'],['text','eventText'],['imageAlt','imageAlt']].forEach(([k,id])=>{$('#'+id).oninput=e=>{const c=selected();if(!c)return;c[k]=e.target.value;markDirty();renderPreview();renderList();updateCounts()}});
+els.image.onchange=async e=>{const c=selected(),f=e.target.files[0];if(!c||!f)return;c.imageData=await fileToDataUrl(f);c.imageName=f.name;c.imageSize=f.size;markDirty();renderAll()};els.audio.onchange=async e=>{const c=selected(),f=e.target.files[0];if(!c||!f)return;c.audioData=await fileToDataUrl(f);c.audioName=f.name;c.audioSize=f.size;markDirty();renderAll()};
+$('#addEventBtn').onclick=addCard;$('#removeImageBtn').onclick=()=>{const c=selected();if(!c)return;Object.assign(c,{imageData:'',imageName:'',imageSize:0});markDirty();renderAll()};$('#removeAudioBtn').onclick=()=>{const c=selected();if(!c)return;Object.assign(c,{audioData:'',audioName:'',audioSize:0});markDirty();renderAll()};$('#addLinkBtn').onclick=()=>{const c=selected();if(!c)return;c.links.push({type:'book',label:'LIBRO',url:''});markDirty();renderAll()};
+$('#duplicateEventBtn').onclick=()=>{const c=selected();if(!c)return;const copy=JSON.parse(JSON.stringify(c));copy.id=uid();copy.title=`${copy.title} - copia`;project.cards.splice(project.cards.indexOf(c)+1,0,copy);selectedId=copy.id;markDirty();renderAll()};$('#deleteEventBtn').onclick=()=>deleteCard();function move(delta){const i=project.cards.findIndex(c=>c.id===selectedId),j=i+delta;if(i<0||j<0||j>=project.cards.length)return;[project.cards[i],project.cards[j]]=[project.cards[j],project.cards[i]];markDirty();renderAll()}$('#moveLeftBtn').onclick=()=>move(-1);$('#moveRightBtn').onclick=()=>move(1);
+const createNewTimelineBtn=$('#createNewTimelineBtn');if(createNewTimelineBtn)createNewTimelineBtn.onclick=()=>{if(project.cards.length&& !confirm('Creare una nuova linea del tempo? Esporta prima il lavoro attuale se vuoi conservarlo.'))return;project=defaultProject();selectedId=null;localStorage.removeItem('timeline-builder-v2');renderAll();showCreationFlow();setTimeout(()=>$('#projectTitle')?.focus(),450)};const modifyExistingTimelineBtn=$('#modifyExistingTimelineBtn');if(modifyExistingTimelineBtn)modifyExistingTimelineBtn.onclick=openExportedSite;const exportTimelineBtn=$('#exportTimelineBtn');if(exportTimelineBtn)exportTimelineBtn.onclick=createSiteFolder;
+const topInstructionsBtn=$('#topInstructionsBtn');if(topInstructionsBtn)topInstructionsBtn.onclick=()=>{const body=$('#topInstructionsBody');const willShow=body.hidden;body.hidden=!willShow;topInstructionsBtn.textContent=willShow?'Nascondi istruzioni':'Mostra istruzioni';topInstructionsBtn.setAttribute('aria-expanded',String(willShow))};const editExistingInstructionsBtn=$('#editExistingInstructionsBtn');if(editExistingInstructionsBtn)editExistingInstructionsBtn.onclick=()=>{const body=$('#editExistingInstructions');const willShow=body.hidden;body.hidden=!willShow;editExistingInstructionsBtn.setAttribute('aria-expanded',String(willShow));const icon=editExistingInstructionsBtn.querySelector('span');if(icon)icon.textContent=willShow?'−':'＋'};const githubTextGuideBtn=$('#githubTextGuideBtn');if(githubTextGuideBtn)githubTextGuideBtn.onclick=()=>{const body=$('#githubTextGuide');const willShow=body.hidden;body.hidden=!willShow;githubTextGuideBtn.setAttribute('aria-expanded',String(willShow));githubTextGuideBtn.textContent=willShow?'Nascondi la guida per GitHub':'Leggi la guida: come pubblicare su GitHub'};const githubTutorialBtn=$('#githubTutorialBtn');if(githubTutorialBtn)githubTutorialBtn.onclick=e=>{const tutorialUrl='INSERISCI_QUI_IL_LINK_DEL_VIDEO_TUTORIAL_GITHUB';if(tutorialUrl.startsWith('INSERISCI_QUI')){e.preventDefault();toast('Il pulsante è predisposto: inserisci il link del video tutorial nel codice.')}};
+const fullBtn=document.createElement('button');fullBtn.type='button';fullBtn.className='button button-primary';fullBtn.textContent='Apri anteprima completa';fullBtn.hidden=true;const modal=document.createElement('div');modal.className='modal';modal.innerHTML='<div class="modal-toolbar"><strong>Anteprima completa</strong><button class="button button-secondary" type="button">Chiudi</button></div><div class="modal-content"><div class="timeline-stage" id="fullPreview"></div></div>';document.body.appendChild(modal);fullBtn.onclick=()=>{modal.classList.add('open');renderPreview($('#fullPreview'));modal.querySelector('button').focus()};modal.querySelector('button').onclick=()=>{modal.classList.remove('open');stopAudio();fullBtn.focus()};modal.onkeydown=e=>{if(e.key==='Escape')modal.querySelector('button').click()};
+
+const previewBottomBtn=$('#previewBottomBtn');if(previewBottomBtn)previewBottomBtn.onclick=()=>fullBtn.click();
+const saveCardBtn=$('#saveCardBtn');
+if(saveCardBtn) saveCardBtn.onclick=()=>{if(!selected())return toast('Seleziona prima una card');saveNow();renderAll();toast('Card salvata')};
+const saveAndNewBtn=$('#saveAndNewBtn');
+if(saveAndNewBtn) saveAndNewBtn.onclick=()=>{if(!selected())return addCard();saveNow();addCard();setTimeout(()=>$('#eventDate')?.focus(),50)};
+const cardCountLabel=$('#cardCountLabel');
+const originalRenderList=renderList;
+renderList=function(){originalRenderList();if(cardCountLabel)cardCountLabel.textContent=`${project.cards.length} ${project.cards.length===1?'card':'card'}`};
+
+renderAll();
+})();
+
+</script>
+</body>
+</html>
