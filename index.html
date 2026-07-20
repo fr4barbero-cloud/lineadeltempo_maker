@@ -572,6 +572,93 @@ body{background:var(--bg)}
   margin-top:1px;
 }
 
+
+/* Card flessibili e anteprima adattiva */
+.timeline{
+  display:grid !important;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--preview-card-min,190px)),1fr)) !important;
+  min-width:0 !important;
+  width:100%;
+  gap:34px 24px !important;
+  padding:54px 18px 42px !important;
+}
+
+.timeline.count-1{--preview-card-min:260px;max-width:320px;margin:0 auto}
+.timeline.count-2{--preview-card-min:235px;max-width:620px;margin:0 auto}
+.timeline.count-3{--preview-card-min:210px;max-width:850px;margin:0 auto}
+.timeline.count-4{--preview-card-min:190px;max-width:1040px;margin:0 auto}
+.timeline.count-many{--preview-card-min:165px;max-width:none}
+
+.timeline-line{display:none !important}
+
+.timeline-card-wrap{
+  width:100% !important;
+  max-width:260px;
+  min-width:0;
+  margin:0 auto;
+}
+
+.timeline.count-many .timeline-card-wrap{max-width:205px}
+
+.timeline-card{
+  width:100% !important;
+  height:auto !important;
+  aspect-ratio:4 / 5;
+}
+
+.timeline-label{
+  min-height:0 !important;
+  padding:11px 9px !important;
+  margin:0 auto;
+  width:calc(100% - 10px);
+  background:var(--primary-soft);
+  border:1px solid var(--line);
+  border-bottom:0;
+  border-radius:14px 14px 0 0;
+}
+
+.timeline-face{
+  border-radius:0 0 14px 14px !important;
+}
+
+.timeline-front{
+  display:grid;
+  place-items:center;
+  padding:18px;
+  text-align:center;
+  background:linear-gradient(180deg,#fff,#f1f7f5);
+}
+
+.timeline-front::after{
+  content:"Clicca per aprire";
+  color:var(--muted);
+  font-size:.8rem;
+  font-weight:700;
+}
+
+.timeline-front.text-only-front strong,
+.timeline-front.text-only-front span{
+  display:none !important;
+}
+
+@media(max-width:760px){
+  .timeline,
+  .timeline.count-1,
+  .timeline.count-2,
+  .timeline.count-3,
+  .timeline.count-4,
+  .timeline.count-many{
+    grid-template-columns:1fr !important;
+    max-width:340px;
+    margin:0 auto;
+  }
+
+  .timeline-card-wrap,
+  .timeline.count-many .timeline-card-wrap{
+    max-width:285px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -706,16 +793,16 @@ body{background:var(--bg)}
 <section class="form-section essential">
 <div class="section-heading">
 <span class="section-icon">1</span>
-<div><h3>Data e titolo</h3><p>Queste informazioni si vedranno sul fronte.</p></div>
+<div><h3>Data, titolo e sottotitolo</h3><p>Usa soltanto gli elementi che servono. Titolo e sottotitolo compariranno una sola volta, in cima alla card.</p></div>
 </div>
 <div class="form-grid">
 <div class="field">
-<label for="eventDate">Data o periodo</label>
+<label for="eventDate">Data o periodo <span class="optional">facoltativo</span></label>
 <input id="eventDate" maxlength="40" placeholder="Esempio: 1937 oppure XX secolo" type="text"/>
 <p class="field-error" data-error-for="eventDate"></p>
 </div>
 <div class="field">
-<label for="eventTitle">Titolo della card</label>
+<label for="eventTitle">Titolo della card <span class="optional">facoltativo</span></label>
 <input id="eventTitle" maxlength="80" placeholder="Esempio: J.R.R. Tolkien" type="text"/>
 <p class="field-error" data-error-for="eventTitle"></p>
 </div>
@@ -728,7 +815,7 @@ body{background:var(--bg)}
 <section class="form-section text-section">
 <div class="section-heading">
 <span class="section-icon">2</span>
-<div><h3>Testo del retro</h3><p>Questo testo apparirà quando la card si gira.</p></div>
+<div><h3>Testo del retro <span class="optional">facoltativo</span></h3><p>Aggiungilo solo quando serve: la card può essere completata anche con altri contenuti.</p></div>
 </div>
 <div class="field">
 <label for="eventText">Scrivi il contenuto</label>
@@ -867,7 +954,18 @@ function saveNow(){clearTimeout(saveTimer);try{localStorage.setItem('timeline-bu
 function markDirty(){setBackupDirty(true);els.saveStatus.textContent='Backup automatico…';clearTimeout(saveTimer);saveTimer=setTimeout(saveNow,250)}
 function loadLocal(){try{return JSON.parse(localStorage.getItem('timeline-builder-v2')||'null')}catch{return null}}
 function toast(msg){els.toast.textContent=msg;els.toast.classList.add('show');setTimeout(()=>els.toast.classList.remove('show'),2600)}
-function completeness(c){const missing=[];if(!c.date?.trim())missing.push('data');if(!c.title?.trim())missing.push('titolo');if(!c.text?.trim())missing.push('testo');return missing}
+function completeness(c){
+  const hasLink=(c.links||[]).some(l=>l.label?.trim()&&l.url?.trim());
+  const hasContent=Boolean(
+    c.date?.trim() ||
+    c.title?.trim() ||
+    c.subtitle?.trim() ||
+    c.text?.trim() ||
+    c.audioData ||
+    hasLink
+  );
+  return hasContent?[]:['contenuto'];
+}
 function deleteCard(id=selectedId){const i=project.cards.findIndex(c=>c.id===id);if(i<0)return;const card=project.cards[i];const label=card.title?.trim()||`Card ${i+1}`;if(!confirm(`Eliminare la card \"${label}\"?\n\nLa card sarà rimossa dalla linea del tempo.`))return;project.cards.splice(i,1);if(selectedId===id)selectedId=project.cards[i]?.id||project.cards[i-1]?.id||null;markDirty();renderAll();toast('Card eliminata')}
 function renderList(){
   els.list.innerHTML='';
@@ -880,7 +978,7 @@ function renderList(){
     item.draggable=true;
     item.setAttribute('role','listitem');
     item.setAttribute('aria-current',c.id===selectedId?'true':'false');
-    item.innerHTML=`<span class="drag-handle" title="Trascina per spostare" aria-hidden="true">⋮⋮</span><button type="button" class="event-select"><span class="event-list-title">${escapeHtml(c.title||`Card ${i+1}`)}</span><span class="event-list-meta">${escapeHtml(c.date||'Data mancante')} · ${c.audioData?'Audio presente':'Senza audio'}</span></button><span class="status-badge ${missing.length?'status-incomplete':'status-complete'}">${missing.length?'Incompleta':'Completa'}</span><button type="button" class="text-button danger list-delete" aria-label="Elimina ${escapeHtml(c.title||`Card ${i+1}`)}">Elimina</button>`;
+    item.innerHTML=`<span class="drag-handle" title="Trascina per spostare" aria-hidden="true">⋮⋮</span><button type="button" class="event-select"><span class="event-list-title">${escapeHtml(c.title||`Card ${i+1}`)}</span><span class="event-list-meta">${escapeHtml([c.date?.trim(),c.subtitle?.trim(),c.audioData?'Audio presente':''].filter(Boolean).join(' · ')||'Card personalizzata')}</span></button><span class="status-badge ${missing.length?'status-incomplete':'status-complete'}">${missing.length?'Incompleta':'Completa'}</span><button type="button" class="text-button danger list-delete" aria-label="Elimina ${escapeHtml(c.title||`Card ${i+1}`)}">Elimina</button>`;
     item.querySelector('.event-select').onclick=()=>{selectedId=c.id;renderAll();$('#eventEditor').scrollIntoView({behavior:'smooth',block:'start'})};
     item.querySelector('.list-delete').onclick=e=>{e.stopPropagation();deleteCard(c.id)};
     item.addEventListener('dragstart',e=>{e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',c.id);item.classList.add('dragging')});
@@ -896,12 +994,12 @@ function renderAudio(c){els.audioPreview.innerHTML=c.audioData?`<div style="widt
 function renderLinks(c){els.links.innerHTML='';(c.links||[]).forEach((l,i)=>{const row=document.createElement('div');row.className='link-row';row.innerHTML=`<div class="field"><label>Tipo</label><select data-k="type"><option value="book">Libro</option><option value="film">Film</option><option value="video">Video</option><option value="site">Sito</option><option value="document">Documento</option><option value="other">Altro</option></select></div><div class="field"><label>Testo pulsante</label><input data-k="label" value="${escapeHtml(l.label||'')}"></div><div class="field"><label>Indirizzo web</label><input data-k="url" value="${escapeHtml(l.url||'')}" placeholder="https://..."></div><button type="button" class="button button-danger button-small">Rimuovi</button>`;row.querySelector('select').value=l.type||'other';row.querySelectorAll('input,select').forEach(inp=>inp.oninput=()=>{l[inp.dataset.k]=inp.value;markDirty();renderPreview();renderList()});row.querySelector('button').onclick=()=>{c.links.splice(i,1);markDirty();renderAll()};els.links.appendChild(row)})}
 function updateCounts(){let p=$('#textCount');if(!p){p=document.createElement('p');p.id='textCount';p.className='char-count';els.text.after(p)}p.textContent=`${els.text.value.length}/1800 caratteri`}
 function resetPreviewCards(scope){scope.querySelectorAll('.timeline-card-wrap').forEach(w=>{const c=w.querySelector('.timeline-card');c?.classList.remove('is-flipped');w.classList.remove('is-active','links-hidden');c?.setAttribute('aria-expanded','false');c?.setAttribute('aria-pressed','false')});stopAudio()}
-function renderPreview(target=els.preview){stopAudio();target.innerHTML='';target.onclick=null;if(!project.cards.length){target.innerHTML='<div class="empty-editor">Aggiungi almeno una card per vedere l’anteprima.</div>';return}const t=document.createElement('div');t.className='timeline';t.innerHTML='<div class="timeline-line" aria-hidden="true"></div>';project.cards.forEach(c=>t.appendChild(makeTimelineCard(c)));target.appendChild(t);target.onclick=e=>{if(e.target.closest('.timeline-card-wrap'))return;resetPreviewCards(target)}}
+function renderPreview(target=els.preview){stopAudio();target.innerHTML='';target.onclick=null;if(!project.cards.length){target.innerHTML='<div class="empty-editor">Aggiungi almeno una card per vedere l’anteprima.</div>';return}const t=document.createElement('div');const count=project.cards.length;t.className='timeline '+(count<=4?'count-'+count:'count-many');t.setAttribute('data-card-count',String(count));t.innerHTML='<div class="timeline-line" aria-hidden="true"></div>';project.cards.forEach(c=>t.appendChild(makeTimelineCard(c)));target.appendChild(t);target.onclick=e=>{if(e.target.closest('.timeline-card-wrap'))return;resetPreviewCards(target)}}
 function makeTimelineCard(c){
   const wrap=document.createElement('article');
   wrap.className='timeline-card-wrap';
   wrap.dataset.id=c.id;
-  wrap.innerHTML=`<div class="timeline-date">${escapeHtml(c.date||'Data')}</div><div class="timeline-stem"></div><div class="timeline-star">★</div><div class="timeline-label"><strong>${escapeHtml(c.title||'Titolo')}</strong><span>${escapeHtml(c.subtitle||'')}</span></div><div class="timeline-card" role="button" tabindex="0" aria-expanded="false" aria-pressed="false" aria-label="Card ${escapeHtml(c.title||'')}. Prima attivazione: ingrandisci. Seconda attivazione: mostra il retro."><div class="timeline-card-inner"><div class="timeline-face timeline-front text-only-front"><strong>${escapeHtml(c.title||'Titolo')}</strong><span>${escapeHtml(c.subtitle||'')}</span></div><div class="timeline-face timeline-back"><button class="timeline-close" type="button" aria-label="Chiudi la card e riduci lo zoom">×</button><p>${formatText(c.text||'Nessun testo')}</p><div class="audio-controls"><button class="audio-button play-audio" type="button"${c.audioData?'':' disabled'}>▶ Ascolta audio</button><button class="audio-button stop-audio" type="button"${c.audioData?'':' disabled'}>■ Interrompi audio</button></div><div class="audio-state" aria-live="polite"></div></div></div></div><div class="timeline-links">${(c.links||[]).filter(l=>l.label&&l.url).map(l=>`<a class="timeline-link" data-type="${escapeHtml(l.type||'other')}" href="${escapeHtml(normalizeUrl(l.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(l.label)}</a>`).join('')}</div>`;
+  wrap.innerHTML=`${c.date?.trim()?`<div class="timeline-date">${escapeHtml(c.date)}</div>`:''}<div class="timeline-stem"></div><div class="timeline-star">★</div><div class="timeline-label"><strong>${escapeHtml(c.title||'Card')}</strong>${c.subtitle?.trim()?`<span>${escapeHtml(c.subtitle)}</span>`:''}</div><div class="timeline-card" role="button" tabindex="0" aria-expanded="false" aria-pressed="false" aria-label="Card ${escapeHtml(c.title||'')}. Prima attivazione: ingrandisci. Seconda attivazione: mostra il retro."><div class="timeline-card-inner"><div class="timeline-face timeline-front text-only-front" aria-label="Fronte della card"></div><div class="timeline-face timeline-back"><button class="timeline-close" type="button" aria-label="Chiudi la card e riduci lo zoom">×</button><p>${formatText(c.text||'Nessun testo')}</p><div class="audio-controls"><button class="audio-button play-audio" type="button"${c.audioData?'':' disabled'}>▶ Ascolta audio</button><button class="audio-button stop-audio" type="button"${c.audioData?'':' disabled'}>■ Interrompi audio</button></div><div class="audio-state" aria-live="polite"></div></div></div></div><div class="timeline-links">${(c.links||[]).filter(l=>l.label&&l.url).map(l=>`<a class="timeline-link" data-type="${escapeHtml(l.type||'other')}" href="${escapeHtml(normalizeUrl(l.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(l.label)}</a>`).join('')}</div>`;
   const card=wrap.querySelector('.timeline-card');
   const close=wrap.querySelector('.timeline-close');
   const reset=(deactivate=true)=>{
@@ -958,7 +1056,20 @@ function normalizeUrl(url=''){if(!url)return '#';return /^https?:\/\//i.test(url
 function playCardAudio(c,wrap){stopAudio();const state=wrap.querySelector('.audio-state');if(!c.audioData){state.textContent='';return}currentAudio=new Audio(c.audioData);state.textContent='Audio in riproduzione';currentAudio.onended=()=>{state.textContent='Audio terminato';currentAudio=null};currentAudio.onerror=()=>{state.textContent='Impossibile riprodurre l’audio';currentAudio=null};currentAudio.play().catch(()=>{state.textContent='Non è stato possibile avviare l’audio. Premi “Ascolta audio” di nuovo.'})}
 function stopAudio(){if(currentAudio){currentAudio.pause();currentAudio.currentTime=0;currentAudio=null}$$('.audio-state').forEach(x=>x.textContent='')}
 function renderAll(){els.title.value=project.title||'';els.instructions.value=project.instructions||'';renderList();renderEditor();renderPreview();renderValidation(false)}
-function validateProject(show=true){const issues=[];if(!project.title?.trim())issues.push('Manca il titolo del progetto.');if(!project.cards.length)issues.push('Aggiungi almeno una card.');project.cards.forEach((c,i)=>{completeness(c).forEach(m=>issues.push(`Card ${i+1}: manca ${m}.`));(c.links||[]).forEach((l,j)=>{if((l.label&&!l.url)||(!l.label&&l.url))issues.push(`Card ${i+1}, link ${j+1}: completa sia il testo sia l’indirizzo.`);else if(l.url&&!/^https?:\/\//i.test(l.url)&&!/^www\./i.test(l.url))issues.push(`Card ${i+1}, link ${j+1}: controlla l’indirizzo web.`)})});if(show)renderValidation(true,issues);return issues}
+function validateProject(show=true){
+  const issues=[];
+  if(!project.title?.trim())issues.push('Manca il titolo del progetto.');
+  if(!project.cards.length)issues.push('Aggiungi almeno una card.');
+  project.cards.forEach((c,i)=>{
+    if(completeness(c).length)issues.push(`Card ${i+1}: inserisci almeno un contenuto.`);
+    (c.links||[]).forEach((l,j)=>{
+      if((l.label&&!l.url)||(!l.label&&l.url))issues.push(`Card ${i+1}, link ${j+1}: completa sia il testo sia l’indirizzo.`);
+      else if(l.url&&!/^https?:\/\//i.test(l.url)&&!/^www\./i.test(l.url))issues.push(`Card ${i+1}, link ${j+1}: controlla l’indirizzo web.`);
+    });
+  });
+  if(show)renderValidation(true,issues);
+  return issues;
+}
 function renderValidation(show=false,issues=validateProject(false)){els.validation.hidden=!show;els.validation.innerHTML=!show?'':issues.length?`<strong>Controllo del progetto</strong><ul>${issues.map(i=>`<li>${escapeHtml(i)}</li>`).join('')}</ul>`:'<strong>Controllo completato</strong><p>Tutte le card obbligatorie risultano complete e i collegamenti sono validi.</p>'}
 function addCard(){const c={id:uid(),date:'',title:'Nuova card',subtitle:'',text:'',audioData:'',audioName:'',audioSize:0,links:[]};project.cards.push(c);selectedId=c.id;markDirty();renderAll();toast('Nuova card aggiunta')}
 function download(name,content,type){const blob=new Blob([content],{type});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
