@@ -659,6 +659,25 @@ body{background:var(--bg)}
   }
 }
 
+
+/* Immagine facoltativa ripristinata sul fronte della card */
+.timeline-front.has-image{
+  padding:0 !important;
+  overflow:hidden;
+  background:#fff;
+}
+
+.timeline-front.has-image::after{
+  content:none !important;
+}
+
+.timeline-front.has-image img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
 </style>
 </head>
 <body>
@@ -961,6 +980,7 @@ function completeness(c){
     c.title?.trim() ||
     c.subtitle?.trim() ||
     c.text?.trim() ||
+    c.imageData ||
     c.audioData ||
     hasLink
   );
@@ -999,7 +1019,7 @@ function makeTimelineCard(c){
   const wrap=document.createElement('article');
   wrap.className='timeline-card-wrap';
   wrap.dataset.id=c.id;
-  wrap.innerHTML=`${c.date?.trim()?`<div class="timeline-date">${escapeHtml(c.date)}</div>`:''}<div class="timeline-stem"></div><div class="timeline-star">★</div><div class="timeline-label"><strong>${escapeHtml(c.title||'Card')}</strong>${c.subtitle?.trim()?`<span>${escapeHtml(c.subtitle)}</span>`:''}</div><div class="timeline-card" role="button" tabindex="0" aria-expanded="false" aria-pressed="false" aria-label="Card ${escapeHtml(c.title||'')}. Prima attivazione: ingrandisci. Seconda attivazione: mostra il retro."><div class="timeline-card-inner"><div class="timeline-face timeline-front text-only-front" aria-label="Fronte della card"></div><div class="timeline-face timeline-back"><button class="timeline-close" type="button" aria-label="Chiudi la card e riduci lo zoom">×</button><p>${formatText(c.text||'Nessun testo')}</p><div class="audio-controls"><button class="audio-button play-audio" type="button"${c.audioData?'':' disabled'}>▶ Ascolta audio</button><button class="audio-button stop-audio" type="button"${c.audioData?'':' disabled'}>■ Interrompi audio</button></div><div class="audio-state" aria-live="polite"></div></div></div></div><div class="timeline-links">${(c.links||[]).filter(l=>l.label&&l.url).map(l=>`<a class="timeline-link" data-type="${escapeHtml(l.type||'other')}" href="${escapeHtml(normalizeUrl(l.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(l.label)}</a>`).join('')}</div>`;
+  wrap.innerHTML=`${c.date?.trim()?`<div class="timeline-date">${escapeHtml(c.date)}</div>`:''}<div class="timeline-stem"></div><div class="timeline-star">★</div><div class="timeline-label"><strong>${escapeHtml(c.title||'Card')}</strong>${c.subtitle?.trim()?`<span>${escapeHtml(c.subtitle)}</span>`:''}</div><div class="timeline-card" role="button" tabindex="0" aria-expanded="false" aria-pressed="false" aria-label="Card ${escapeHtml(c.title||'')}. Prima attivazione: ingrandisci. Seconda attivazione: mostra il retro."><div class="timeline-card-inner"><div class="timeline-face timeline-front${c.imageData?' has-image':' text-only-front'}" aria-label="Fronte della card">${c.imageData?`<img src="${c.imageData}" alt="${escapeHtml(c.imageAlt||c.title||'Immagine della card')}">`:''}</div><div class="timeline-face timeline-back"><button class="timeline-close" type="button" aria-label="Chiudi la card e riduci lo zoom">×</button><p>${formatText(c.text||'Nessun testo')}</p><div class="audio-controls"><button class="audio-button play-audio" type="button"${c.audioData?'':' disabled'}>▶ Ascolta audio</button><button class="audio-button stop-audio" type="button"${c.audioData?'':' disabled'}>■ Interrompi audio</button></div><div class="audio-state" aria-live="polite"></div></div></div></div><div class="timeline-links">${(c.links||[]).filter(l=>l.label&&l.url).map(l=>`<a class="timeline-link" data-type="${escapeHtml(l.type||'other')}" href="${escapeHtml(normalizeUrl(l.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(l.label)}</a>`).join('')}</div>`;
   const card=wrap.querySelector('.timeline-card');
   const close=wrap.querySelector('.timeline-close');
   const reset=(deactivate=true)=>{
