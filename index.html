@@ -79,7 +79,15 @@ main{max-width:1800px;margin:auto;padding:26px clamp(16px,3vw,44px) 60px}.projec
   .goal-label{margin:0 0 5px!important;font-size:.78rem!important;font-weight:800;letter-spacing:.06em;color:#475569}
   .goal-card h3{font-size:1.3rem;margin-bottom:8px}
   .goal-card .choice-actions{margin-top:auto;padding-top:8px}
-  .recommended-badge{display:inline-block;margin:0 0 10px!important;padding:5px 9px;border-radius:999px;background:#eef8ef;color:#245c2a;font-size:.85rem!important;font-weight:700}
+  .recommended-badge{
+  display:inline-block;
+  padding:5px 10px;
+  background:#fff;
+  color:#222;
+  border:1px solid #d8d8d8;
+  border-radius:999px;
+  font-weight:700;
+}
   .concise-guide{grid-template-columns:repeat(3,minmax(0,1fr))}
   .help-center-box{margin-top:18px}
   @media(max-width:900px){.concise-guide{grid-template-columns:1fr}}
@@ -88,6 +96,482 @@ main{max-width:1800px;margin:auto;padding:26px clamp(16px,3vw,44px) 60px}.projec
   .text-only-front{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:22px;gap:10px}
   .text-only-front strong{font-size:1.25rem}
   .text-only-front span{font-size:1rem}
+
+/* Layout e palette funzionale a basso carico cognitivo */
+:root{
+  --bg:#f3f7f5;
+  --surface:#ffffff;
+  --surface-2:#f8fbf9;
+  --text:#1f332b;
+  --muted:#61736b;
+  --line:#d4e2db;
+
+  --primary:#3F6F67;
+  --primary-dark:#2F5A53;
+  --primary-soft:#E7F1EE;
+
+  --guide:#fffbe8;
+  --guide-hover:#fff4c8;
+  --guide-border:#e7d990;
+  --guide-text:#544d2c;
+
+  --save:#dcefdc;
+  --save-hover:#c9e5ca;
+  --save-border:#82b487;
+  --save-text:#245c32;
+
+  --danger:#f7dddd;
+  --danger-hover:#efc7c7;
+  --danger-border:#c98686;
+  --danger-text:#852f35;
+
+  --shadow:0 8px 22px rgba(34,64,50,.08);
+}
+
+body{background:var(--bg)}
+.brand strong{color:var(--primary-dark)}
+.home-hero{
+  margin:4px 0 18px;
+  padding:30px 24px;
+  text-align:center;
+  background:var(--primary-soft);
+  border:1px solid #bdd7c7;
+  border-radius:var(--radius)
+}
+.home-hero .eyebrow{color:var(--primary-dark)}
+.home-hero h1{color:var(--primary-dark)}
+.home-hero p{color:#445f52}
+
+/* Guide, tutorial e spiegazioni: giallo tenue */
+.instructions-head,.guide-bar{
+  background:var(--guide);
+  border-color:var(--guide-border);
+  color:var(--guide-text)
+}
+.instructions-head p,.guide-bar{color:var(--guide-text)}
+.instruction-number,.guide-bar b{background:#d7c96f;color:#403a1f}
+.github-box{background:#fffdf4;border-left-color:var(--guide-border)}
+.edit-existing-toggle{background:var(--guide);color:var(--guide-text)}
+.choice-help{background:#fffdf4;border-color:var(--guide-border)}
+
+#topInstructionsBtn,
+#editExistingInstructionsBtn,
+.helpToggleBtn,
+#publishVideoHelpBtn,
+#publishTextHelpBtn,
+.github-tutorial-row .button,
+.button.preview-strong{
+  background:var(--guide);
+  border-color:var(--guide-border);
+  color:var(--guide-text)
+}
+#topInstructionsBtn:hover,
+#editExistingInstructionsBtn:hover,
+.helpToggleBtn:hover,
+#publishVideoHelpBtn:hover,
+#publishTextHelpBtn:hover,
+.github-tutorial-row .button:hover,
+.button.preview-strong:hover{
+  background:var(--guide-hover);
+  border-color:#d4c46e;
+  color:#403a1f
+}
+
+/* Navigazione e azioni ordinarie: verde principale */
+.button.primary,
+#createNewTimelineBtn,
+#modifyExistingTimelineBtn,
+#addEventBtn,
+#addLinkBtn,
+#moveLeftBtn,
+#moveRightBtn,
+.icon-button:not(.danger){
+  background:var(--primary-soft);
+  border-color:#9fc9ae;
+  color:var(--primary-dark)
+}
+.button.primary:hover,
+#createNewTimelineBtn:hover,
+#modifyExistingTimelineBtn:hover,
+#addEventBtn:hover,
+#addLinkBtn:hover,
+#moveLeftBtn:hover,
+#moveRightBtn:hover,
+.icon-button:not(.danger):hover{
+  background:#d5eadc;
+  border-color:#76ae8b;
+  color:#28523b
+}
+.choice-button.primary{
+  background:#d5eadc;
+  border-color:#76ae8b;
+  color:#28523b
+}
+.choice-button.secondary{
+  background:#f4f9f6;
+  border-color:#b4d3c0;
+  color:#365d47
+}
+.choice-button.primary:hover{background:#c8e2d1}
+.choice-button.secondary:hover{background:#e5f1e9}
+
+/* Salvataggio ed esportazione: verde tenue */
+#saveCardBtn,
+#saveAndNewBtn,
+#exportEditableBtn,
+#exportStudentsBtn,
+#exportTimelineBtn,
+#teacherModeBtn,
+.button.teacher,
+.button.success,
+.button.success-strong,
+.choice-main{
+  background:var(--save);
+  border-color:var(--save-border);
+  color:var(--save-text)
+}
+#saveCardBtn:hover,
+#saveAndNewBtn:hover,
+#exportEditableBtn:hover,
+#exportStudentsBtn:hover,
+#exportTimelineBtn:hover,
+#teacherModeBtn:hover,
+.button.teacher:hover,
+.button.success:hover,
+.button.success-strong:hover,
+.choice-main:hover{
+  background:var(--save-hover);
+  border-color:#659d70;
+  color:#194a26
+}
+
+/* Eliminazione e rimozione: rosso tenue */
+.icon-button.danger,
+.text-button.danger,
+.button-danger,
+.list-delete{
+  background:var(--danger);
+  border:1px solid var(--danger-border);
+  color:var(--danger-text);
+  border-radius:9px;
+  padding:7px 10px
+}
+.icon-button.danger:hover,
+.text-button.danger:hover,
+.button-danger:hover,
+.list-delete:hover{
+  background:var(--danger-hover);
+  border-color:#b46767;
+  color:#6f252b
+}
+.stop-audio,.timeline-close{
+  background:var(--danger);
+  border-color:var(--danger-border);
+  color:var(--danger-text)
+}
+
+/* Anteprima e stati attivi coerenti */
+.live-stage{background:linear-gradient(180deg,#fff,#edf5f0)}
+.event-list-item[aria-current="true"]{background:var(--primary-soft)}
+.timeline-link,.audio-button{
+  background:var(--primary-soft);
+  border-color:#9fc9ae;
+  color:var(--primary-dark)
+}
+.section-icon,.empty-icon{background:var(--primary-soft);color:var(--primary-dark)}
+.drop-zone:hover{background:var(--primary-soft)}
+.notice-card{border-color:var(--primary)!important;background:var(--primary-soft)!important}
+
+/* Schede finali leggibili e uniformi */
+.export-choice{
+  border:2px solid var(--line);
+  border-radius:18px;
+  padding:18px;
+  background:#fff;
+  box-shadow:0 4px 14px rgba(34,64,50,.06)
+}
+.recommended-badge{
+  background:var(--guide);
+  color:var(--guide-text);
+  border:1px solid var(--guide-border)
+}
+
+/* Rifinitura finale di spaziature, allineamenti e pulsanti */
+.start-choice,
+.instructions-panel,
+.project-intro,
+.cards-panel,
+.live-panel,
+.edit-panel,
+.finish-panel,
+.export-choice{
+  border-radius:16px;
+}
+
+.start-choice{
+  padding:26px;
+}
+
+.start-choice-actions{
+  gap:14px;
+  max-width:880px;
+}
+
+.choice-button{
+  min-height:88px;
+  padding:17px 20px;
+  border-radius:12px;
+  line-height:1.25;
+}
+
+.choice-button small{
+  margin-top:3px;
+  line-height:1.3;
+}
+
+.instructions-head{
+  padding:19px 22px;
+}
+
+.instructions-body{
+  padding:20px 22px;
+}
+
+.instructions-actions,
+.choice-actions,
+.finish-actions,
+.main-actions,
+.move-actions,
+.card-tools{
+  align-items:center;
+}
+
+.button{
+  min-height:42px;
+  padding:10px 16px;
+  border-radius:10px;
+  line-height:1.2;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.button.compact{
+  min-height:36px;
+  padding:8px 12px;
+}
+
+.button.wide{
+  min-height:46px;
+  padding:12px 16px;
+}
+
+.icon-button{
+  min-height:38px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.project-intro{
+  padding:24px;
+  gap:24px;
+}
+
+.guide-bar{
+  gap:10px 18px;
+  padding:13px 16px;
+}
+
+.cards-panel,
+.live-panel,
+.edit-panel{
+  padding:19px;
+}
+
+.panel-heading{
+  align-items:flex-start;
+  margin-bottom:14px;
+}
+
+.panel-heading.compact{
+  margin-bottom:13px;
+}
+
+.form-section{
+  padding:16px;
+  margin-bottom:13px;
+}
+
+.section-heading{
+  margin-bottom:13px;
+}
+
+.main-actions{
+  gap:9px;
+}
+
+.finish-panel{
+  padding:22px;
+  gap:18px;
+}
+
+.finish-actions{
+  gap:10px;
+}
+
+.export-choice-grid{
+  gap:16px;
+}
+
+.export-choice{
+  padding:19px;
+}
+
+.goal-card h3{
+  line-height:1.2;
+  margin-bottom:7px;
+}
+
+.goal-card > p{
+  margin-bottom:12px;
+}
+
+.goal-card .choice-actions{
+  width:100%;
+  gap:9px;
+}
+
+.goal-card .choice-main{
+  flex:1 1 260px;
+}
+
+.goal-card .helpToggleBtn{
+  flex:0 0 auto;
+}
+
+.choice-help{
+  width:100%;
+  margin-top:12px;
+  padding:15px;
+}
+
+.choice-help h4{
+  margin:0 0 8px;
+}
+
+.choice-help ol{
+  margin-top:8px;
+  padding-left:22px;
+}
+
+.choice-help li{
+  margin:6px 0;
+}
+
+.recommended-badge{
+  margin:0 0 11px!important;
+  line-height:1.2;
+}
+
+@media(max-width:900px){
+  .goal-card .choice-actions{
+    align-items:stretch;
+  }
+
+  .goal-card .choice-main,
+  .goal-card .helpToggleBtn{
+    flex:1 1 100%;
+    width:100%;
+  }
+}
+
+@media(max-width:560px){
+  .start-choice,
+  .instructions-body,
+  .project-intro,
+  .cards-panel,
+  .live-panel,
+  .edit-panel,
+  .finish-panel,
+  .export-choice{
+    padding:15px;
+  }
+
+  .button,
+  .choice-button,
+  .icon-button{
+    width:100%;
+  }
+
+  .card-tools{
+    width:100%;
+  }
+
+  .move-actions{
+    align-items:stretch;
+  }
+}
+
+
+/* Titolo e intestazione uniformati al creatore Flash Card */
+.brand strong{
+  font-size:1.35rem;
+  letter-spacing:.02em;
+  color:var(--primary-dark);
+}
+
+.brand small{
+  display:block;
+  color:var(--muted);
+  font-size:.68rem;
+  letter-spacing:.12em;
+}
+
+.home-hero h1{
+  margin:0;
+  font-size:clamp(2.4rem,6vw,4.6rem);
+  line-height:1;
+  letter-spacing:.04em;
+  color:var(--primary-dark);
+}
+
+.home-hero .eyebrow{
+  display:block;
+  margin-bottom:6px;
+  color:var(--primary-dark);
+  font-size:.78rem;
+  font-weight:800;
+  letter-spacing:.14em;
+}
+
+
+/* "Come funziona" nel flusso di creazione: un passaggio sotto l'altro */
+.guide-bar{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:stretch !important;
+  gap:10px !important;
+}
+
+.guide-bar > strong{
+  display:block;
+  margin-bottom:2px;
+}
+
+.guide-bar > span{
+  display:flex !important;
+  align-items:flex-start !important;
+  gap:10px !important;
+  width:100%;
+}
+
+.guide-bar > span > b{
+  flex:0 0 23px;
+  margin-top:1px;
+}
+
 </style>
 </head>
 <body>
@@ -98,8 +582,18 @@ main{max-width:1800px;margin:auto;padding:26px clamp(16px,3vw,44px) 60px}.projec
 </a>
 <div class="save-state"><span aria-live="polite" id="saveStatus">Salvato</span></div>
 </header>
-<main>
-<section aria-labelledby="instructionsHeading" class="instructions-panel">
+<main><section aria-labelledby="homeTitle" class="home-hero"><span class="eyebrow">CREATORE VISUALE</span><h1 id="homeTitle">LINEA DEL TEMPO</h1><p>Crea, modifica e pubblica linee del tempo accessibili e facili da consultare.</p></section>
+
+<section aria-labelledby="startChoiceTitle" class="start-choice" id="startChoice">
+<span class="step-pill">SCEGLI COME INIZIARE</span>
+<h2 id="startChoiceTitle">Cosa vuoi fare?</h2>
+<p>Puoi creare una nuova linea del tempo oppure aprire un progetto già scaricato.</p>
+<div class="start-choice-actions">
+<button class="button primary choice-button" id="createNewTimelineBtn" type="button">Crea una nuova linea del tempo<small>Inizia dal Passo 1 con un progetto vuoto</small></button>
+<button class="button secondary choice-button" id="modifyExistingTimelineBtn" type="button">Apri una linea del tempo<small>Seleziona la cartella completa del progetto</small></button>
+<input aria-hidden="true" directory="" hidden="" id="fallbackProjectFolderInput" multiple="" type="file" webkitdirectory=""/>
+</div>
+</section><section aria-labelledby="instructionsHeading" class="instructions-panel">
 <div class="instructions-head">
 <div>
 <span class="step-pill">GUIDA RAPIDA</span>
@@ -114,34 +608,24 @@ main{max-width:1800px;margin:auto;padding:26px clamp(16px,3vw,44px) 60px}.projec
 <div class="instructions-grid concise-guide">
 <div class="instruction-card"><strong><span class="instruction-number">1</span>Inizia</strong>Scegli se creare una nuova linea del tempo o modificare una cartella già creata.</div>
 <div class="instruction-card"><strong><span class="instruction-number">2</span>Crea e controlla</strong>Inserisci le card una alla volta. In ogni card puoi mettere un’immagine sul fronte, un testo sul retro, il file audio MP3 del testo e uno o più collegamenti esterni. Per le immagini usa solo file PNG. Controlla il risultato con l’anteprima.</div>
-<div class="instruction-card"><strong><span class="instruction-number">3</span>Scegli il risultato</strong>Alla fine scegli il risultato: salva il progetto completo se vuoi riaprirlo, modificarlo o pubblicarlo online; crea invece una copia di sola consultazione se vuoi condividerla senza permettere modifiche. Dentro “Salva progetto” trovi anche le istruzioni e i tutorial per pubblicare su GitHub.</div>
+<div class="instruction-card"><strong><span class="instruction-number">3</span>Scegli il risultato</strong>Alla fine scarica il progetto completo se vuoi riaprirlo e modificarlo; scarica invece il progetto da pubblicare o consultare se vuoi condividerlo senza permettere modifiche. Nella seconda sezione trovi anche i tutorial per pubblicare su GitHub.</div>
 </div>
 <div class="github-box help-center-box">
 <h3>Hai bisogno di altre istruzioni?</h3>
 <p>Scegli soltanto l’aiuto che ti serve.</p>
 <div class="github-tutorial-row">
-<button aria-controls="editExistingInstructions" aria-expanded="false" class="button secondary" id="editExistingInstructionsBtn" type="button">Modificare una linea del tempo già creata</button>
+<button aria-controls="editExistingInstructions" aria-expanded="false" class="button secondary" id="editExistingInstructionsBtn" type="button">Apri le istruzioni per riaprire un progetto</button>
 </div>
 <div class="edit-existing-content" hidden="" id="editExistingInstructions">
-<h4>Modificare una linea del tempo già creata</h4>
+<h4>Come riaprire una linea del tempo</h4>
 <ol>
-<li>Premi <strong>“Modifica una linea del tempo già creata”</strong>.</li>
+<li>Premi <strong>“Apri una linea del tempo”</strong>.</li>
 <li>Seleziona la <strong>cartella completa</strong>, non il solo file <code>index.html</code>.</li>
 <li>Modifica, aggiungi, elimina o riordina le card.</li>
-<li>Alla fine premi <strong>“Salva progetto”</strong> per conservare una nuova copia modificabile.</li>
+<li>Alla fine premi <strong>“Scarica il progetto”</strong> per conservare una nuova copia modificabile.</li>
 </ol>
 <p><strong>Importante:</strong> la cartella deve contenere <code>progetto.timeline</code>.</p>
 </div></div>
-</div>
-</section>
-<section aria-labelledby="startChoiceTitle" class="start-choice" id="startChoice">
-<span class="step-pill">SCEGLI COME INIZIARE</span>
-<h2 id="startChoiceTitle">Cosa vuoi fare?</h2>
-<p>Puoi creare una nuova linea del tempo oppure riaprire una cartella già esportata per modificarla.</p>
-<div class="start-choice-actions">
-<button class="button primary choice-button" id="createNewTimelineBtn" type="button">Crea nuova linea del tempo<small>Inizia dal Passo 1 con un progetto vuoto</small></button>
-<button class="button secondary choice-button" id="modifyExistingTimelineBtn" type="button">Modifica una linea del tempo già creata<small>Seleziona la cartella completa del sito</small></button>
-<input aria-hidden="true" directory="" hidden="" id="fallbackProjectFolderInput" multiple="" type="file" webkitdirectory=""/>
 </div>
 </section>
 <div class="creation-flow" hidden="" id="creationFlow">
@@ -301,47 +785,39 @@ main{max-width:1800px;margin:auto;padding:26px clamp(16px,3vw,44px) 60px}.projec
 <button class="button preview-strong" id="previewBottomBtn" type="button">Guarda anteprima</button>
 </div>
 <p class="teacher-note">Hai finito? Scegli il risultato che vuoi ottenere.</p>
-<button aria-hidden="true" hidden="" id="exportTimelineBtn" tabindex="-1" type="button">Salva progetto</button>
-<button aria-hidden="true" hidden="" id="teacherModeBtn" tabindex="-1" type="button">Crea copia di sola consultazione</button>
+<button aria-hidden="true" hidden="" id="exportTimelineBtn" tabindex="-1" type="button">Scarica il progetto</button>
+<button aria-hidden="true" hidden="" id="teacherModeBtn" tabindex="-1" type="button">Scarica il progetto da pubblicare o consultare</button>
 <div aria-live="polite" class="validation-summary" id="validationSummary"></div>
 </section>
 <section aria-labelledby="scelteFinaliTitolo" class="panel final-goals" id="scelteFinali">
 <span class="step-pill">PASSO 5</span>
 <h2 id="scelteFinaliTitolo">Hai finito. Cosa vuoi fare adesso?</h2>
-<p class="choice-note">Scegli il risultato che vuoi ottenere. Per pubblicare online, apri “Come funziona” sotto “Salva progetto”.</p>
+<p class="choice-note">Scegli il risultato che vuoi ottenere. Per pubblicare online, apri “Come funziona” sotto “Scarica il progetto da pubblicare o consultare”.</p>
 <div class="export-choice-grid">
 <article class="export-choice goal-card goal-work">
-
-
-<h3>Salva progetto</h3>
-<p>Salva una copia che potrai riaprire e modificare.</p>
+<h3>Scarica il progetto</h3>
+<p>Scarica una copia che potrai riaprire e modificare.</p>
 <div class="choice-actions">
-<button class="button primary choice-main" id="exportEditableBtn" type="button">Salva progetto</button>
+<button class="button success-strong choice-main" id="exportEditableBtn" type="button">Scarica il progetto</button>
 <button aria-controls="helpEditable" aria-expanded="false" class="button secondary helpToggleBtn" type="button">Come funziona</button>
 </div>
 <div class="choice-help" hidden="" id="helpEditable">
-<h4>Salvare e continuare a modificare</h4>
+<h4>Scaricare e continuare a modificare</h4>
 <ol>
 <li>Scegli una cartella vuota.</li>
-<li>Il programma salva tutti i file del progetto.</li>
+<li>Il programma scarica tutti i file del progetto nella cartella scelta.</li>
 <li>Conserva la cartella completa senza separare i file.</li>
-<li>Per continuare il lavoro, usa “Modifica una linea del tempo già creata”.</li>
+<li>Per continuare il lavoro, usa “Apri una linea del tempo”.</li>
 </ol>
 <p>La cartella contiene <code>progetto.timeline</code>, necessario per riaprire il progetto nell’editor.</p>
-
-
-
-
 </div>
 </article>
 <article class="export-choice goal-card goal-share">
-
-
-<h3>Progetto da pubblicare o di sola consultazione</h3>
-<p>Crea una copia che potrai condividere senza permettere modifiche. Poi segui il tutorial per pubblicare la tua linea del tempo online e ottenere un link.</p>
+<h3>Scarica il progetto da pubblicare o consultare</h3>
+<p>Scarica una copia che potrai condividere senza permettere modifiche. Poi segui il tutorial per pubblicare la tua linea del tempo online e ottenere un link.</p>
 <p class="recommended-badge">Consigliato per la condivisione</p>
 <div class="choice-actions">
-<button class="button teacher choice-main" id="exportStudentsBtn" type="button">Crea progetto da pubblicare o consultare</button>
+<button class="button success-strong choice-main" id="exportStudentsBtn" type="button">Scarica il progetto da pubblicare o consultare</button>
 <button aria-controls="helpStudents" aria-expanded="false" class="button secondary helpToggleBtn" type="button">Come funziona</button>
 </div>
 <div class="choice-help" hidden="" id="helpStudents">
